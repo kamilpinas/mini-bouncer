@@ -22,42 +22,42 @@ const Gallery: React.FC = () => {
   const photos = [
     {
       id: 1,
-      url: `/gallery-1.jpg`,
+      url: `gallery-1.jpg`,
       link: "https://www.instagram.com/p/DJfHBtfSYi6",
     },
     {
       id: 2,
-      url: `/gallery-2.jpg`,
+      url: `gallery-2.jpg`,
       link: "https://www.instagram.com/p/C8zmw_UuEcC",
     },
     {
       id: 3,
-      url: `/gallery-3.jpg`,
+      url: `gallery-3.jpg`,
       link: "https://www.instagram.com/p/CzjXP1cuLGZ",
     },
     {
       id: 4,
-      url: `/gallery-4.jpg`,
+      url: `gallery-4.jpg`,
       link: "https://www.instagram.com/p/Cx1Yvn9Ocn3",
     },
     {
       id: 5,
-      url: `/gallery-5.jpg`,
+      url: `gallery-5.jpg`,
       link: "https://www.instagram.com/p/CxRlZJ2Ou8D/",
     },
     {
       id: 6,
-      url: `/gallery-6.jpg`,
+      url: `gallery-6.jpg`,
       link: "https://www.instagram.com/p/Cv5XaWfOjgv",
     },
     {
       id: 7,
-      url: `/gallery-7.jpg`,
+      url: `gallery-7.jpg`,
       link: "https://www.instagram.com/p/CvlOi-0O45u",
     },
     {
       id: 8,
-      url: `/gallery-8.jpg`,
+      url: `gallery-8.jpg`,
       link: "https://www.instagram.com/p/CvDWpXtuo5l",
     },
   ]
