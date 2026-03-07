@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
 import Hero from "./components/sections/Hero"
@@ -13,7 +13,9 @@ import Contact from "./components/sections/Contact"
 import { HelmetProvider } from "react-helmet-async"
 
 function App() {
-  const [selectedBouncerSlug, setSelectedBouncerSlug] = useState<string | null>(null)
+  const [selectedBouncerSlug, setSelectedBouncerSlug] = useState<string | null>(
+    null,
+  )
 
   const handleSelectBouncer = (slug: string) => {
     setSelectedBouncerSlug(slug)
@@ -36,7 +38,10 @@ function App() {
           <Pricing onBook={handleClearSelection} />
           <Gallery />
           <FAQ />
-          <Contact bouncerSlug={selectedBouncerSlug} onClearSelection={handleClearSelection} />
+          <Contact
+            bouncerSlug={selectedBouncerSlug}
+            onClearSelection={handleClearSelection}
+          />
         </main>
         <Footer />
       </div>
