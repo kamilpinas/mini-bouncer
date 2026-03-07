@@ -22,7 +22,12 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Column 1: Brand */}
           <div>
-            <h3 className="font-serif text-2xl text-white">Mini Bouncer ☁️</h3>
+            <a onClick={(e) => scrollToSection(e, "home")}>
+              <img
+                src="logo.png"
+                className="object-cover w-[70%] h-[50%] rounded-2xl"
+              />
+            </a>
             <p className="text-sm text-soft-sage/70 mt-2">
               Making little moments unforgettable.
             </p>
