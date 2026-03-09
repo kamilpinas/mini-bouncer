@@ -7,7 +7,6 @@ const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Our Bouncers", href: "#our-bouncers" },
   { name: "How It Works", href: "#how-it-works" },
-  { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ]
@@ -18,13 +17,18 @@ const Navbar: React.FC = () => {
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
+    href: string,
   ) => {
     e.preventDefault()
-    const element = document.getElementById(id.replace("#", ""))
+    // Extract ID from href (e.g., "#contact" -> "contact")
+    const targetId = href.startsWith("#") ? href.slice(1) : href
+    const element = document.getElementById(targetId)
+    
     if (element) {
+      // We rely on CSS scroll-behavior: smooth in index.css
+      // Using behavior: "smooth" here can sometimes conflict or cause issues
+      // when it's already defined in CSS.
       element.scrollIntoView({
-        behavior: "smooth",
         block: "start",
       })
       setIsOpen(false)

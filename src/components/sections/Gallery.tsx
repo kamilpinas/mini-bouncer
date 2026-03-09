@@ -67,7 +67,7 @@ const Gallery: React.FC = () => {
       <div className="container mx-auto px-4">
         <SectionHeader
           label="@MINI.BOUNCER"
-          title="The Cutest Parties in Chicagoland"
+          title="The Cutest Parties in the Volo Area"
           subtitle="Follow us on Instagram for party inspo and behind-the-scenes cuteness."
         />
         <motion.div

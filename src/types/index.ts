@@ -8,6 +8,10 @@ export interface Bouncer {
   size: string
   setting: string
   img: string
+  pricing: {
+    fourHours: string
+    sixHours: string
+  }
 }
 
 export interface Testimonial {
@@ -17,15 +21,6 @@ export interface Testimonial {
   location: string
   eventType: string
   rating: number
-}
-
-export interface PricingPlan {
-  id: string
-  name: string
-  price: string
-  duration: string
-  features: string[]
-  isPopular: boolean
 }
 
 export interface FAQItem {

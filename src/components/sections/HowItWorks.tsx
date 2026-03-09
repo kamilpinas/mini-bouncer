@@ -9,7 +9,7 @@ const steps = [
     icon: Calendar,
     title: "Pick Your Date & Bouncer",
     description:
-      "Browse our collection, choose your favorite, and select your party date. We'll confirm availability within the hour.",
+      "Browse our collection, choose your favorite, and select your party date. We'll confirm availability.",
   },
   {
     icon: Truck,

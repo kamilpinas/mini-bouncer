@@ -12,7 +12,6 @@ const Hero: React.FC = () => {
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({
-        behavior: "smooth",
         block: "start",
       })
     }
@@ -52,7 +51,7 @@ const Hero: React.FC = () => {
             variants={itemVariants}
             className="text-[10px] sm:text-xs mt-4 font-medium text-blush-rose tracking-widest uppercase px-2"
           >
-            ☁️ Chicagoland's Cutest Bounce House Rentals
+            ☁️ Volo's Cutest Bounce House Rentals
           </motion.p>
           <motion.h1
             variants={itemVariants}
@@ -122,7 +121,7 @@ const Hero: React.FC = () => {
             <span className="hidden sm:inline">·</span>
             <span>✓ Same-Day Setup</span>
             <span className="hidden sm:inline">·</span>
-            <span>✓ Insured & Safe</span>
+            <span>✓ No Deposit Required</span>
           </motion.div>
         </motion.div>
       </div>

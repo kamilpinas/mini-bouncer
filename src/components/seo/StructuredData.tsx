@@ -5,19 +5,19 @@ const structuredData = {
   "@type": "LocalBusiness",
   name: "Mini Bouncer",
   description:
-    "Modern bounce house rentals for toddlers and kids in the Chicagoland, IL area.",
+    "Modern bounce house rentals for toddlers and kids in the Volo, IL area.",
   url: "https://www.minibouncer.com",
   email: "minibouncerfoxlake@gmail.com",
   telephone: "",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Chicagoland",
+    addressLocality: "Volo",
     addressRegion: "IL",
     addressCountry: "US",
   },
   areaServed: {
     "@type": "GeoShape",
-    description: "Chicagoland and surrounding suburbs",
+    description: "Volo, IL and surrounding suburbs",
     polygon: "42.2,-88.4 41.6,-88.4 41.6,-87.5 42.2,-87.5",
   },
   image: "https://www.minibouncer.com/og-image.jpg",

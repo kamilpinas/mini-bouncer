@@ -29,9 +29,9 @@ const features = [
   {
     icon: Shield,
     emoji: "🛡️",
-    title: "Fully Insured",
+    title: "No Deposit Required",
     description:
-      "We carry full liability insurance so you can relax and enjoy the party worry-free.",
+      "Book with confidence. We don't require any upfront deposits to secure your date.",
   },
   {
     icon: Palette,

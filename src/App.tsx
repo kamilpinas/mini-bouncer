@@ -6,7 +6,6 @@ import Bouncers from "./components/sections/Bouncers"
 import HowItWorks from "./components/sections/HowItWorks"
 import WhyUs from "./components/sections/WhyUs"
 import Testimonials from "./components/sections/Testimonials"
-import Pricing from "./components/sections/Pricing"
 import Gallery from "./components/sections/Gallery"
 import FAQ from "./components/sections/FAQ"
 import Contact from "./components/sections/Contact"
@@ -35,7 +34,6 @@ function App() {
           <HowItWorks />
           <WhyUs />
           <Testimonials />
-          <Pricing onBook={handleClearSelection} />
           <Gallery />
           <FAQ />
           <Contact

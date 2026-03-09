@@ -4,13 +4,13 @@ import { Mail, MapPin, Instagram } from "lucide-react"
 const Footer: React.FC = () => {
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
+    href: string,
   ) => {
     e.preventDefault()
-    const element = document.getElementById(id.replace("#", ""))
+    const targetId = href.startsWith("#") ? href.slice(1) : href
+    const element = document.getElementById(targetId)
     if (element) {
       element.scrollIntoView({
-        behavior: "smooth",
         block: "start",
       })
     }
@@ -21,14 +21,18 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Column 1: Brand */}
-          <div>
-            <a onClick={(e) => scrollToSection(e, "home")}>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <a 
+              onClick={(e) => scrollToSection(e, "home")}
+              className="cursor-pointer inline-block"
+            >
               <img
                 src="logo.png"
-                className="object-cover w-[70%] h-[50%] rounded-2xl"
+                className="object-contain w-48 md:w-56 h-auto rounded-2xl"
+                alt="Mini Bouncer Logo"
               />
             </a>
-            <p className="text-sm text-soft-sage/70 mt-2">
+            <p className="text-sm text-soft-sage/70 mt-4">
               Making little moments unforgettable.
             </p>
           </div>
@@ -68,15 +72,6 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#pricing"
-                  onClick={(e) => scrollToSection(e, "pricing")}
-                  className="text-sm text-soft-sage/70 hover:text-white transition"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
                   href="#faq"
                   onClick={(e) => scrollToSection(e, "faq")}
                   className="text-sm text-soft-sage/70 hover:text-white transition"
@@ -103,7 +98,7 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-center text-sm text-soft-sage/70">
-                <MapPin size={16} className="mr-2" /> Chicagoland
+                <MapPin size={16} className="mr-2" /> Volo, IL
               </li>
               <li className="flex items-center text-sm text-soft-sage/70">
                 <Mail size={16} className="mr-2" />{" "}
@@ -157,7 +152,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-white/10 pt-6 mt-12 text-center">
           <p className="text-xs text-soft-sage/50">
             © {new Date().getFullYear()} Mini Bouncer. All rights reserved. Made
-            with 💕 in Chicagoland.
+            with 💕 in Volo, IL.
           </p>
         </div>
       </div>

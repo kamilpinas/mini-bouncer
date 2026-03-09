@@ -26,7 +26,7 @@ const Testimonials: React.FC = () => {
       <div className="container mx-auto px-4">
         <SectionHeader
           label="Happy Mamas"
-          title="Loved by 200+ Chicagoland Families"
+          title="Loved by 200+ Local Families"
         />
         <motion.div
           ref={ref}
