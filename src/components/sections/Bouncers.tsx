@@ -68,7 +68,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
       <div className="container mx-auto px-4">
         <SectionHeader
           label="Our Collection"
-          title="Bouncy, Beautiful & Baby-Approved"
+          title="Bouncy, Beautiful & Little-jumper-approved"
           subtitle="Select the perfect bouncer for your event. All rentals include free delivery, setup, and sanitization within our service area."
         />
         <motion.div

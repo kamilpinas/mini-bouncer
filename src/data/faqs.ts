@@ -29,13 +29,13 @@ export const faqs: FAQItem[] = [
     id: "faq5",
     question: "What surfaces can the bounce house be set up on?",
     answer:
-      "Grass is ideal! We can also set up on concrete, driveways, or indoors (garage, basement, event venue) as long as there is enough ceiling height and space.",
+      "Grass is ideal! We can also set up on concrete, driveways, or indoors (living room, garage, basement, event venue) as long as there is enough ceiling height and space.",
   },
   {
     id: "faq6",
     question: "What happens if it rains?",
     answer:
-      "Safety first! If weather conditions are unsafe (high winds, heavy rain), we will work with you to reschedule at no extra charge. Light rain is usually fine as our bouncers are covered.",
+      "Safety first! In rain we don't work. If weather conditions are unsafe (high winds, heavy rain), we will work with you to reschedule at no extra charge. Light rain is usually fine as our bouncers are covered.",
   },
   {
     id: "faq7",

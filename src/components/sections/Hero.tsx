@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
             variants={itemVariants}
             className="text-[10px] sm:text-xs mt-4 font-medium text-blush-rose tracking-widest uppercase px-2"
           >
-            ☁️ Volo's Cutest Bounce House Rentals
+            ☁️ JUMP & PLAY THE MINI WAY
           </motion.p>
           <motion.h1
             variants={itemVariants}

@@ -419,6 +419,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                       @mini.bouncer
                     </a>
                   </div>
+                  <div className="flex items-center gap-4 text-xs font-medium text-white/60 hover:text-white transition-colors">
+                    <span className="w-[14px] flex items-center justify-center text-[10px]">📞</span>
+                    <a href="tel:2246079212">
+                      224-607-9212
+                    </a>
+                  </div>
                 </div>
 
                 <div className="pt-4">

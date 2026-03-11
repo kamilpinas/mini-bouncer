@@ -120,6 +120,12 @@ const Footer: React.FC = () => {
                   @mini.bouncer
                 </a>
               </li>
+              <li className="flex items-center text-sm text-soft-sage/70">
+                <span className="w-4 h-4 mr-2 flex items-center justify-center">📞</span>
+                <a href="tel:2246079212" className="hover:text-white transition">
+                  224-607-9212
+                </a>
+              </li>
             </ul>
           </div>
 

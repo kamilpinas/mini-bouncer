@@ -8,7 +8,7 @@ const structuredData = {
     "Modern bounce house rentals for toddlers and kids in the Volo, IL area.",
   url: "https://www.minibouncer.com",
   email: "minibouncerfoxlake@gmail.com",
-  telephone: "",
+  telephone: "224-607-9212",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Volo",

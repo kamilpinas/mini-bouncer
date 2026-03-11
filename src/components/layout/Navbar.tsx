@@ -53,10 +53,11 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="container mx-auto px-4 h-16 md:h-20 flex justify-between items-center">
-          <a onClick={(e) => scrollToSection(e, "home")}>
+          <a onClick={(e) => scrollToSection(e, "home")} className="cursor-pointer h-12 md:h-16 flex items-center">
             <img
               src="logo.png"
-              className="object-cover w-full h-20 p-2 rounded-2xl"
+              className="object-contain h-full w-auto"
+              alt="Mini Bouncer Logo"
             />
           </a>
 
@@ -66,7 +67,7 @@ const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-sm text-near-black hover:text-blush-rose transition-colors"
+                className="text-sm text-blush-rose hover:text-near-black transition-colors"
               >
                 {link.name}
               </a>
@@ -100,11 +101,10 @@ const Navbar: React.FC = () => {
             <div className="container mx-auto px-4 h-full flex flex-col">
               <div className="h-16 flex justify-between items-center">
                 <a
-                  href="#home"
                   onClick={(e) => scrollToSection(e, "home")}
-                  className="font-serif text-2xl text-blush-rose font-medium"
+                  className="h-10 cursor-pointer"
                 >
-                  Mini Bouncer ☁️
+                  <img src="logo.png" className="h-full w-auto object-contain" alt="Mini Bouncer Logo" />
                 </a>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -113,13 +113,13 @@ const Navbar: React.FC = () => {
                   <X size={24} />
                 </button>
               </div>
-              <nav className="flex-grow flex flex-col items-center justify-center gap-8">
+              <nav className="flex-grow flex flex-col items-center justify-center gap-6">
                 {navLinks.map((link) => (
                   <motion.a
                     key={link.name}
                     href={link.href}
                     onClick={(e) => scrollToSection(e, link.href)}
-                    className="text-2xl text-near-black hover:text-blush-rose transition-colors"
+                    className="text-2xl text-blush-rose hover:text-near-black transition-colors"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: navLinks.indexOf(link) * 0.1 }}
@@ -127,14 +127,22 @@ const Navbar: React.FC = () => {
                     {link.name}
                   </motion.a>
                 ))}
-                <Button asChild size="lg" className="mt-4">
-                  <a
-                    href="#contact"
-                    onClick={(e) => scrollToSection(e, "contact")}
+                <div className="mt-8 flex flex-col items-center gap-4">
+                  <Button asChild size="lg">
+                    <a
+                      href="#contact"
+                      onClick={(e) => scrollToSection(e, "contact")}
+                    >
+                      Book Now
+                    </a>
+                  </Button>
+                  <a 
+                    href="tel:2246079212" 
+                    className="text-blush-rose font-medium text-lg mt-2"
                   >
-                    Book Now
+                    224-607-9212
                   </a>
-                </Button>
+                </div>
               </nav>
             </div>
           </motion.div>
