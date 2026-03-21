@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react"
+import emailjs from "@emailjs/browser"
 import {
   MapPin,
   Mail,
@@ -10,6 +11,10 @@ import {
   Clock,
   CalendarDays,
   Sparkles,
+  Loader2,
+  User,
+  Phone,
+  MessageCircleHeart,
 } from "lucide-react"
 import { motion, type Variants } from "framer-motion"
 import { useScrollReveal } from "../../hooks/useScrollReveal"
@@ -25,6 +30,7 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   const { ref, controls } = useScrollReveal()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formErrors, setFormErrors] = useState<Record<string, boolean>>({})
 
   // Date and Time State
@@ -32,9 +38,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   const [selectedTime, setSelectedTime] = useState<string>("")
 
   const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
     location: "",
     bouncer: bouncerSlug || "",
     duration: "Up to 6 hours",
+    message: "",
   })
 
   // Update bouncer if slug changes from outside
@@ -78,10 +87,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     "7:00 PM",
   ]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     const errors: Record<string, boolean> = {
+      name: !formData.name.trim(),
+      phone: !formData.phone.trim(),
       bouncer: !formData.bouncer,
       location: !formData.location.trim(),
       date: !selectedDate,
@@ -98,11 +109,41 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
       return
     }
 
-    setIsSubmitted(true)
+    setIsLoading(true)
+
+    try {
+      const templateParams = {
+        bouncer_name: selectedBouncerData?.name || formData.bouncer,
+        location: formData.location,
+        date: selectedDate?.toLocaleDateString(),
+        time: selectedTime,
+        duration: formData.duration,
+        price: currentPrice,
+        user_name: formData.name,
+        user_phone: formData.phone,
+        message: formData.message,
+      }
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      )
+
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error("Failed to send email:", error)
+      alert("Something went wrong. Please try again or contact us directly.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -153,9 +194,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                       setSelectedDate(null)
                       setSelectedTime("")
                       setFormData({
+                        name: "",
+                        phone: "",
                         location: "",
                         bouncer: "",
                         duration: "Up to 6 hours",
+                        message: "",
                       })
                       setFormErrors({})
                     }}
@@ -214,7 +258,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     </div>
                     <div
                       className={twMerge(
-                        "grid grid-cols-2 gap-4 p-1 rounded-[28px] transition-all",
+                        "grid grid-cols-4 gap-4 p-1 rounded-[28px] transition-all",
                         formErrors.bouncer
                           ? "ring-2 ring-red-500/20 bg-red-500/5"
                           : "",
@@ -454,6 +498,149 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Step 6 & 7: Contact Info */}
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.name ? "text-red-500" : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.name
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
+                          6
+                        </span>
+                        Your Name{" "}
+                        {formErrors.name && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Required)
+                          </span>
+                        )}
+                      </label>
+                      <div className="relative">
+                        <User
+                          className={twMerge(
+                            "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors",
+                            formErrors.name
+                              ? "text-red-500"
+                              : "text-blush-rose",
+                          )}
+                          size={18}
+                        />
+                        <input
+                          type="text"
+                          name="name"
+                          required
+                          placeholder="Your full name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40 focus:outline-none",
+                            formErrors.name
+                              ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                              : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.phone ? "text-red-500" : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.phone
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
+                          7
+                        </span>
+                        Phone Number{" "}
+                        {formErrors.phone && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Required)
+                          </span>
+                        )}
+                      </label>
+                      <div className="relative">
+                        <Phone
+                          className={twMerge(
+                            "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors",
+                            formErrors.phone
+                              ? "text-red-500"
+                              : "text-blush-rose",
+                          )}
+                          size={18}
+                        />
+                        <input
+                          type="tel"
+                          name="phone"
+                          required
+                          placeholder="(555) 000-0000"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40 focus:outline-none",
+                            formErrors.phone
+                              ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                              : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-8">
+                    <div className="space-y-4">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors bg-soft-sage text-near-black",
+                          )}
+                        >
+                          8
+                        </span>
+                        Message{" "}
+                      </label>
+                      <div className="relative">
+                        <MessageCircleHeart
+                          className={twMerge(
+                            "absolute left-4 top-[1rem] pointer-events-none transition-colors text-blush-rose",
+                          )}
+                          size={18}
+                        />
+                        <textarea
+                          name="message"
+                          required
+                          placeholder="Enter your message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows={4}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40 focus:outline-none border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </form>
               )}
             </div>
@@ -573,11 +760,20 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   <Button
                     type="submit"
                     form="booking-form"
-                    className="w-full py-4 text-lg group rounded-[24px] shadow-2xl bg-white text-near-black hover:bg-blush-rose hover:text-white transition-all duration-300"
-                    disabled={isSubmitted}
+                    className="w-full py-4 text-lg group rounded-[24px] shadow-2xl bg-white text-near-black hover:bg-blush-rose hover:text-white transition-all duration-300 flex items-center justify-center gap-3"
+                    disabled={isSubmitted || isLoading}
                   >
-                    Confirm Booking
-                    <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Confirm Booking
+                        <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
                   <div className="flex flex-wrap justify-center gap-4 mt-6">
                     <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
