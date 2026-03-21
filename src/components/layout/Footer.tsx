@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Column 1: Brand */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <a 
+            <a
               onClick={(e) => scrollToSection(e, "home")}
               className="cursor-pointer inline-block"
             >
@@ -134,8 +134,13 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li className="flex items-center text-sm text-soft-sage/70">
-                <span className="w-4 h-4 mr-2 flex items-center justify-center">📞</span>
-                <a href="tel:2246079212" className="hover:text-white transition">
+                <span className="w-4 h-4 mr-2 flex items-center justify-center">
+                  📞
+                </span>
+                <a
+                  href="tel:2246079212"
+                  className="hover:text-white transition"
+                >
                   224-607-9212
                 </a>
               </li>
@@ -170,8 +175,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-white/10 pt-6 mt-12 text-center">
           <p className="text-xs text-soft-sage/50">
-            © {new Date().getFullYear()} Mini Bouncer. All rights reserved. Made
-            with 💕 in Volo, IL.
+            © {new Date().getFullYear()} Mini Bouncer. All rights reserved.
           </p>
         </div>
       </div>
