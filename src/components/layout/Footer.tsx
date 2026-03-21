@@ -1,7 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
 import { Mail, MapPin, Instagram } from "lucide-react"
+import LegalModal from "../ui/LegalModal"
 
 const Footer: React.FC = () => {
+  const [legalModal, setLegalModal] = useState<{
+    isOpen: boolean
+    type: "privacy" | "terms"
+  }>({
+    isOpen: false,
+    type: "privacy",
+  })
+
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -14,6 +23,10 @@ const Footer: React.FC = () => {
         block: "start",
       })
     }
+  }
+
+  const openLegal = (type: "privacy" | "terms") => {
+    setLegalModal({ isOpen: true, type })
   }
 
   return (
@@ -136,20 +149,20 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="text-sm text-soft-sage/70 hover:text-white transition"
+                <button
+                  onClick={() => openLegal("privacy")}
+                  className="text-sm text-soft-sage/70 hover:text-white transition cursor-pointer"
                 >
                   Privacy Policy
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-sm text-soft-sage/70 hover:text-white transition"
+                <button
+                  onClick={() => openLegal("terms")}
+                  className="text-sm text-soft-sage/70 hover:text-white transition cursor-pointer"
                 >
                   Terms of Service
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -162,6 +175,12 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
+
+      <LegalModal
+        isOpen={legalModal.isOpen}
+        type={legalModal.type}
+        onClose={() => setLegalModal({ ...legalModal, isOpen: false })}
+      />
     </footer>
   )
 }

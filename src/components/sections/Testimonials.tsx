@@ -13,11 +13,12 @@ const Testimonials: React.FC = () => {
     visible: { transition: { staggerChildren: 0.2 } },
   }
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      scale: 1,
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
     },
   }
 

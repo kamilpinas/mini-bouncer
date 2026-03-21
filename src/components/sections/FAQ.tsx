@@ -8,11 +8,12 @@ import { useScrollReveal } from "../../hooks/useScrollReveal"
 const FAQ: React.FC = () => {
   const { ref, controls } = useScrollReveal()
   const variants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      scale: 1,
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
