@@ -3,6 +3,7 @@ import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
 import Hero from "./components/sections/Hero"
 import Bouncers from "./components/sections/Bouncers"
+import SoftPlay from "./components/sections/SoftPlay"
 import HowItWorks from "./components/sections/HowItWorks"
 import WhyUs from "./components/sections/WhyUs"
 import Testimonials from "./components/sections/Testimonials"
@@ -31,6 +32,7 @@ function App() {
         <main>
           <Hero />
           <Bouncers onSelectBouncer={handleSelectBouncer} />
+          <SoftPlay />
           <HowItWorks />
           <WhyUs />
           <Testimonials />

@@ -33,7 +33,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   const [formData, setFormData] = useState({
     location: "",
     bouncer: bouncerSlug || "",
-    duration: "4 hours",
+    duration: "Up to 6 hours",
   })
 
   // Update bouncer if slug changes from outside
@@ -59,15 +59,21 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
 
   const currentPrice = useMemo(() => {
     if (!selectedBouncerData) return null
-    return formData.duration === "4 hours"
-      ? selectedBouncerData.pricing.fourHours
-      : selectedBouncerData.pricing.sixHours
-  }, [selectedBouncerData, formData.duration])
+    return selectedBouncerData.price
+  }, [selectedBouncerData])
 
   const timeSlots = [
-    "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-    "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM",
-    "5:00 PM", "6:00 PM", "7:00 PM",
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+    "5:00 PM",
+    "6:00 PM",
+    "7:00 PM",
   ]
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -88,10 +94,6 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
 
   const handleBouncerSelect = (slug: string) => {
     setFormData((prev) => ({ ...prev, bouncer: slug }))
-  }
-
-  const handleDurationSelect = (duration: string) => {
-    setFormData((prev) => ({ ...prev, duration }))
   }
 
   return (
@@ -136,7 +138,11 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   </Button>
                 </div>
               ) : (
-                <form id="booking-form" onSubmit={handleSubmit} className="flex-grow space-y-12">
+                <form
+                  id="booking-form"
+                  onSubmit={handleSubmit}
+                  className="flex-grow space-y-12"
+                >
                   {/* Step 1: Bouncer Choice */}
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
@@ -210,22 +216,8 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                         </span>
                         How Long?
                       </label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {["4 hours", "6 hours"].map((d) => (
-                          <button
-                            key={d}
-                            type="button"
-                            onClick={() => handleDurationSelect(d)}
-                            className={twMerge(
-                              "py-3 rounded-xl border-2 font-serif text-base transition-all duration-300",
-                              formData.duration === d
-                                ? "border-near-black bg-near-black text-white shadow-md"
-                                : "border-soft-sage/40 hover:border-soft-sage text-dark-muted",
-                            )}
-                          >
-                            {d}
-                          </button>
-                        ))}
+                      <div className="py-3 px-5 rounded-xl border-2 border-near-black bg-near-black text-white shadow-md font-serif text-base">
+                        Up to 6 hours
                       </div>
                     </div>
 
@@ -420,10 +412,10 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     </a>
                   </div>
                   <div className="flex items-center gap-4 text-xs font-medium text-white/60 hover:text-white transition-colors">
-                    <span className="w-[14px] flex items-center justify-center text-[10px]">📞</span>
-                    <a href="tel:2246079212">
-                      224-607-9212
-                    </a>
+                    <span className="w-[14px] flex items-center justify-center text-[10px]">
+                      📞
+                    </span>
+                    <a href="tel:2246079212">224-607-9212</a>
                   </div>
                 </div>
 
@@ -431,12 +423,15 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   <Button
                     type="submit"
                     form="booking-form"
-                    className="w-full py-6 text-xl group rounded-[24px] shadow-2xl bg-white text-near-black hover:bg-blush-rose hover:text-white transition-all duration-300"
+                    className="w-full py-4 text-lg group rounded-[24px] shadow-2xl bg-white text-near-black hover:bg-blush-rose hover:text-white transition-all duration-300"
                     disabled={
-                      !selectedDate || !selectedTime || !formData.bouncer || isSubmitted
+                      !selectedDate ||
+                      !selectedTime ||
+                      !formData.bouncer ||
+                      isSubmitted
                     }
                   >
-                    Confirm Booking Request
+                    Confirm Booking
                     <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Button>
                   <div className="flex flex-wrap justify-center gap-4 mt-6">

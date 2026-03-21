@@ -12,10 +12,7 @@ export const bouncers: Bouncer[] = [
     size: "8ft x 14.6ft",
     setting: "Indoor/Outdoor",
     img: "mini_with_balls.jpg",
-    pricing: {
-      fourHours: "$300",
-      sixHours: "$350",
-    },
+    price: "$300",
   },
   {
     id: "mini-slide",
@@ -28,10 +25,7 @@ export const bouncers: Bouncer[] = [
     size: "8ft x 11ft",
     setting: "Indoor/Outdoor",
     img: "mini_with_slide.jpg",
-    pricing: {
-      fourHours: "$200",
-      sixHours: "$250",
-    },
+    price: "$200",
   },
   {
     id: "big-slide",
@@ -44,10 +38,7 @@ export const bouncers: Bouncer[] = [
     size: "13ft x 16.5ft",
     setting: "Outdoor Preferred",
     img: "big_with_slide.jpg",
-    pricing: {
-      fourHours: "$400",
-      sixHours: "$450",
-    },
+    price: "$400",
   },
   {
     id: "classic-white",
@@ -60,9 +51,6 @@ export const bouncers: Bouncer[] = [
     size: "13ft x 13ft",
     setting: "Outdoor Preferred",
     img: "classic_white.jpg",
-    pricing: {
-      fourHours: "$300",
-      sixHours: "$350",
-    },
+    price: "$350",
   },
 ]

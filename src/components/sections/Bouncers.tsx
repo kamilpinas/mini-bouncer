@@ -100,17 +100,11 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                   
                   <div className="mt-4 space-y-2 flex-grow">
                     <div className="p-3 bg-soft-sage/10 rounded-xl border border-soft-sage/20">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider flex items-center">
-                          <Clock className="w-3 h-3 mr-1" /> 4 Hours
-                        </span>
-                        <span className="text-lg font-serif text-near-black">{bouncer.pricing.fourHours}</span>
-                      </div>
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider flex items-center">
-                          <Clock className="w-3 h-3 mr-1" /> 6 Hours
+                          <Clock className="w-3 h-3 mr-1" /> Up to 6 Hours
                         </span>
-                        <span className="text-lg font-serif text-near-black">{bouncer.pricing.sixHours}</span>
+                        <span className="text-lg font-serif text-near-black">{bouncer.price}</span>
                       </div>
                     </div>
 
@@ -199,17 +193,11 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                   
                   <div className="mt-6 p-4 bg-soft-sage/10 rounded-2xl border border-soft-sage/20">
                     <p className="text-[10px] font-bold text-near-black uppercase tracking-widest mb-3">Rental Pricing</p>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-dark-muted flex items-center">
-                        <Clock className="w-4 h-4 mr-2 text-blush-rose" /> Up to 4 Hours
-                      </span>
-                      <span className="text-xl font-serif text-near-black">{selectedBouncer.pricing.fourHours}</span>
-                    </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-dark-muted flex items-center">
                         <Clock className="w-4 h-4 mr-2 text-blush-rose" /> Up to 6 Hours
                       </span>
-                      <span className="text-xl font-serif text-near-black">{selectedBouncer.pricing.sixHours}</span>
+                      <span className="text-xl font-serif text-near-black">{selectedBouncer.price}</span>
                     </div>
                   </div>
 

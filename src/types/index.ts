@@ -8,10 +8,7 @@ export interface Bouncer {
   size: string
   setting: string
   img: string
-  pricing: {
-    fourHours: string
-    sixHours: string
-  }
+  price: string
 }
 
 export interface Testimonial {
