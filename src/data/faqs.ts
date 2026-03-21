@@ -41,7 +41,7 @@ export const faqs: FAQItem[] = [
     id: "faq7",
     question: "What payment methods do you accept?",
     answer:
-      "We offer Zelle, cash, PayPal invoice, and PayPal pay in 4.",
+      "We accept Zelle, cash, PayPal invoice, and PayPal pay in 4.",
   },
   {
     id: "faq8",

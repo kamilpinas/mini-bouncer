@@ -22,7 +22,7 @@ const features = [
   {
     icon: Package,
     emoji: "📦",
-    title: "Free Delivery & Setup",
+    title: "Delivery & Setup",
     description:
       "We deliver, set up, and pick up — all included. You literally dont have to lift a finger.",
   },
