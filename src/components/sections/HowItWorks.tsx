@@ -15,7 +15,7 @@ const steps = [
     icon: Truck,
     title: "We Deliver & Set Up",
     description:
-      "Our team arrives early, sanitizes everything on-site, and sets up your bounce house exactly where you want it. No stress.",
+      "Our team arrives early and sets up your bounce house exactly where you want it. No stress.",
   },
   {
     icon: Heart,

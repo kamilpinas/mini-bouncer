@@ -69,7 +69,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
         <SectionHeader
           label="Our Collection"
           title="Bouncy, Beautiful & Little-jumper-approved"
-          subtitle="Select the perfect bouncer for your event. All rentals include free delivery, setup, and sanitization within our service area."
+          subtitle="Select the perfect bouncer for your event. All rentals include free delivery and setup within our service area."
         />
         <motion.div
           ref={ref}
@@ -120,7 +120,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
 
                   <div className="mt-6 pt-4 border-t border-soft-sage/20 flex items-center justify-between">
                     <button
-                      className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose transition-colors"
+                      className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose focus:outline-none focus:text-blush-rose transition-colors"
                     >
                       View Details
                     </button>

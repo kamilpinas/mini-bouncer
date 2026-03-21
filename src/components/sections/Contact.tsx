@@ -25,6 +25,7 @@ interface ContactProps {
 const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   const { ref, controls } = useScrollReveal()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formErrors, setFormErrors] = useState<Record<string, boolean>>({})
 
   // Date and Time State
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -40,6 +41,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   React.useEffect(() => {
     if (bouncerSlug) {
       setFormData((prev) => ({ ...prev, bouncer: bouncerSlug }))
+      setFormErrors((prev) => ({ ...prev, bouncer: false }))
     }
   }, [bouncerSlug])
 
@@ -78,10 +80,24 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedDate || !selectedTime || !formData.bouncer) {
-      alert("Please select a bouncer, date, and time.")
+
+    const errors: Record<string, boolean> = {
+      bouncer: !formData.bouncer,
+      location: !formData.location.trim(),
+      date: !selectedDate,
+      time: !selectedTime,
+    }
+
+    setFormErrors(errors)
+
+    if (Object.values(errors).some((error) => error)) {
+      const formElement = document.getElementById("booking-form")
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: "smooth", block: "center" })
+      }
       return
     }
+
     setIsSubmitted(true)
   }
 
@@ -90,10 +106,14 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    if (value.trim()) {
+      setFormErrors((prev) => ({ ...prev, [name]: false }))
+    }
   }
 
   const handleBouncerSelect = (slug: string) => {
     setFormData((prev) => ({ ...prev, bouncer: slug }))
+    setFormErrors((prev) => ({ ...prev, bouncer: false }))
   }
 
   return (
@@ -132,6 +152,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                       setIsSubmitted(false)
                       setSelectedDate(null)
                       setSelectedTime("")
+                      setFormData({
+                        location: "",
+                        bouncer: "",
+                        duration: "Up to 6 hours",
+                      })
+                      setFormErrors({})
                     }}
                   >
                     Back to Booking
@@ -142,15 +168,35 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   id="booking-form"
                   onSubmit={handleSubmit}
                   className="flex-grow space-y-12"
+                  noValidate
                 >
                   {/* Step 1: Bouncer Choice */}
                   <div className="space-y-6">
                     <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[8px] text-near-black">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.bouncer
+                            ? "text-red-500"
+                            : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.bouncer
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
                           1
                         </span>
-                        The Bouncer
+                        The Bouncer{" "}
+                        {formErrors.bouncer && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Please select one)
+                          </span>
+                        )}
                       </label>
                       {formData.bouncer && (
                         <button
@@ -158,14 +204,22 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                           onClick={() => {
                             onClearSelection()
                             setFormData((prev) => ({ ...prev, bouncer: "" }))
+                            setFormErrors({})
                           }}
-                          className="text-[10px] font-bold text-blush-rose uppercase tracking-widest flex items-center gap-2 hover:opacity-70"
+                          className="text-sm font-bold text-blush-rose uppercase tracking-widest flex items-center gap-2 hover:opacity-70"
                         >
                           <RotateCcw size={10} /> Reset
                         </button>
                       )}
                     </div>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div
+                      className={twMerge(
+                        "grid grid-cols-2 gap-4 p-1 rounded-[28px] transition-all",
+                        formErrors.bouncer
+                          ? "ring-2 ring-red-500/20 bg-red-500/5"
+                          : "",
+                      )}
+                    >
                       {bouncers.map((bouncer) => {
                         const isSelected = formData.bouncer === bouncer.slug
                         return (
@@ -174,10 +228,13 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                             type="button"
                             onClick={() => handleBouncerSelect(bouncer.slug)}
                             className={twMerge(
-                              "group relative aspect-square rounded-[24px] overflow-hidden border-2 transition-all duration-500",
+                              "group relative aspect-square rounded-[24px] overflow-hidden border-2 transition-all duration-500 ",
                               isSelected
                                 ? "border-blush-rose ring-8 ring-blush-rose/5 scale-105 shadow-xl"
                                 : "border-transparent hover:border-soft-sage hover:scale-102",
+                              formErrors.bouncer && !isSelected
+                                ? "border-red-500/30"
+                                : "",
                             )}
                           >
                             <img
@@ -210,8 +267,8 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   {/* Step 2 & 3: Options & Location */}
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[8px] text-near-black">
+                      <label className="text-sm font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
+                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[9px] text-near-black">
                           2
                         </span>
                         How Long?
@@ -222,11 +279,30 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     </div>
 
                     <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[8px] text-near-black">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.location
+                            ? "text-red-500"
+                            : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.location
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
                           3
                         </span>
-                        Where?
+                        Where?{" "}
+                        {formErrors.location && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Required)
+                          </span>
+                        )}
                       </label>
                       <input
                         type="text"
@@ -236,7 +312,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                         required
                         value={formData.location}
                         onChange={handleChange}
-                        className="w-full px-5 py-3 rounded-xl border-2 border-soft-sage/30 focus:outline-none focus:border-near-black transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40"
+                        className={twMerge(
+                          "w-full px-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40 focus:outline-none",
+                          formErrors.location
+                            ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                            : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                        )}
                       />
                     </div>
                   </div>
@@ -244,51 +325,120 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   {/* Step 4 & 5: Schedule with Dropdowns */}
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[8px] text-near-black">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.date ? "text-red-500" : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.date
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
                           4
                         </span>
-                        Which Day?
+                        Which Day?{" "}
+                        <span className="text-[9px] opacity-50 lowercase tracking-normal ml-1">
+                          (mm/dd/yyyy)
+                        </span>
+                        {formErrors.date && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Required)
+                          </span>
+                        )}
                       </label>
                       <div className="relative">
                         <CalendarDays
-                          className="absolute left-4 top-1/2 -translate-y-1/2 text-blush-rose pointer-events-none"
+                          className={twMerge(
+                            "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors",
+                            formErrors.date
+                              ? "text-red-500"
+                              : "text-blush-rose",
+                          )}
                           size={18}
                         />
                         <input
                           type="date"
                           required
                           min={new Date().toISOString().split("T")[0]}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             setSelectedDate(
                               e.target.value
                                 ? new Date(e.target.value + "T00:00:00")
                                 : null,
                             )
-                          }
-                          className="w-full pl-12 pr-5 py-3 rounded-xl border-2 border-soft-sage/30 focus:outline-none focus:border-near-black transition-all bg-soft-sage/5 text-sm font-medium text-near-black appearance-none"
+                            if (e.target.value)
+                              setFormErrors((prev) => ({
+                                ...prev,
+                                date: false,
+                              }))
+                          }}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black appearance-none focus:outline-none",
+                            formErrors.date
+                              ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                              : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-4">
-                      <label className="text-[10px] font-bold text-near-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-5 h-5 bg-soft-sage rounded-full flex items-center justify-center text-[8px] text-near-black">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.time ? "text-red-500" : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.time
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
                           5
                         </span>
-                        What Time?
+                        What Time?{" "}
+                        {formErrors.time && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Required)
+                          </span>
+                        )}
                       </label>
                       <div className="relative">
                         <Clock
-                          className="absolute left-4 top-1/2 -translate-y-1/2 text-blush-rose pointer-events-none"
+                          className={twMerge(
+                            "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors",
+                            formErrors.time
+                              ? "text-red-500"
+                              : "text-blush-rose",
+                          )}
                           size={18}
                         />
                         <select
                           required
                           disabled={!selectedDate}
                           value={selectedTime}
-                          onChange={(e) => setSelectedTime(e.target.value)}
-                          className="w-full pl-12 pr-5 py-3 rounded-xl border-2 border-soft-sage/30 focus:outline-none focus:border-near-black transition-all bg-soft-sage/5 text-sm font-medium text-near-black appearance-none disabled:opacity-50 disabled:cursor-not-allowed"
+                          onChange={(e) => {
+                            setSelectedTime(e.target.value)
+                            if (e.target.value)
+                              setFormErrors((prev) => ({
+                                ...prev,
+                                time: false,
+                              }))
+                          }}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black appearance-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none",
+                            formErrors.time
+                              ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                              : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
                         >
                           <option value="">
                             {selectedDate
@@ -355,7 +505,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                           <p className="text-sm font-medium">
                             {selectedDate
                               ? selectedDate.toLocaleDateString("en-US", {
-                                  month: "short",
+                                  month: "numeric",
                                   day: "numeric",
                                   year: "numeric",
                                 })
@@ -424,12 +574,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     type="submit"
                     form="booking-form"
                     className="w-full py-4 text-lg group rounded-[24px] shadow-2xl bg-white text-near-black hover:bg-blush-rose hover:text-white transition-all duration-300"
-                    disabled={
-                      !selectedDate ||
-                      !selectedTime ||
-                      !formData.bouncer ||
-                      isSubmitted
-                    }
+                    disabled={isSubmitted}
                   >
                     Confirm Booking
                     <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -438,10 +583,6 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
                       <Check size={10} className="mr-1.5 text-green-500" /> No
                       Deposit
-                    </span>
-                    <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
-                      <Check size={10} className="mr-1.5 text-green-500" /> Free
-                      Delivery
                     </span>
                     <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
                       <Check size={10} className="mr-1.5 text-green-500" />{" "}

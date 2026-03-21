@@ -6,7 +6,7 @@ const structuredData = {
   name: "Mini Bouncer",
   description:
     "Modern bounce house rentals for toddlers and kids in the Volo, IL area.",
-  url: "https://www.minibouncer.com",
+  url: "https://www.mini-bouncer.com",
   email: "minibouncerfoxlake@gmail.com",
   telephone: "224-607-9212",
   address: {

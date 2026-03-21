@@ -35,22 +35,28 @@ export const faqs: FAQItem[] = [
     id: "faq6",
     question: "What happens if it rains?",
     answer:
-      "Safety first! In rain we don't work. If weather conditions are unsafe (high winds, heavy rain), we will work with you to reschedule at no extra charge. Light rain is usually fine as our bouncers are covered.",
+      "Safety first! We do not set up in the rain. If rain is expected, the rental will be canceled or rescheduled at no cost to you.",
   },
   {
     id: "faq7",
+    question: "What payment methods do you accept?",
+    answer:
+      "We offer Zelle, cash, PayPal invoice, and PayPal pay in 4.",
+  },
+  {
+    id: "faq8",
     question: "Are your bounce houses clean?",
     answer:
       "Absolutely. We deep-clean and sanitize every bounce house with hospital-grade, child-safe disinfectant before AND after every single rental. Your childs health is our #1 priority.",
   },
   {
-    id: "faq8",
+    id: "faq9",
     question: "Do I need to supervise the kids?",
     answer:
       "Yes — we require that a responsible adult is present to supervise children at all times while the bounce house is in use. Safety is a team effort!",
   },
   {
-    id: "faq9",
+    id: "faq10",
     question: "Can I set up inside my house or a venue?",
     answer:
       "Yes! As long as the space meets minimum size requirements (check the bouncer dimensions) and has adequate ceiling clearance, indoor setups are a great option.",

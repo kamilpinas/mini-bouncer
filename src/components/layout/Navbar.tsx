@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
     // Extract ID from href (e.g., "#contact" -> "contact")
     const targetId = href.startsWith("#") ? href.slice(1) : href
     const element = document.getElementById(targetId)
-    
+
     if (element) {
       // We rely on CSS scroll-behavior: smooth in index.css
       // Using behavior: "smooth" here can sometimes conflict or cause issues
@@ -53,7 +53,10 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="container mx-auto px-4 h-16 md:h-20 flex justify-between items-center">
-          <a onClick={(e) => scrollToSection(e, "home")} className="cursor-pointer h-12 md:h-16 flex items-center">
+          <a
+            onClick={(e) => scrollToSection(e, "home")}
+            className="cursor-pointer h-12 md:h-16 flex items-center"
+          >
             <img
               src="logo.png"
               className="object-contain h-full w-auto"
@@ -67,7 +70,7 @@ const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-sm text-blush-rose hover:text-near-black transition-colors"
+                className="text-md text-blush-rose hover:text-near-black transition-colors"
               >
                 {link.name}
               </a>
@@ -104,7 +107,11 @@ const Navbar: React.FC = () => {
                   onClick={(e) => scrollToSection(e, "home")}
                   className="h-10 cursor-pointer"
                 >
-                  <img src="logo.png" className="h-full w-auto object-contain" alt="Mini Bouncer Logo" />
+                  <img
+                    src="logo.png"
+                    className="h-full w-auto object-contain"
+                    alt="Mini Bouncer Logo"
+                  />
                 </a>
                 <button
                   onClick={() => setIsOpen(false)}
@@ -113,13 +120,13 @@ const Navbar: React.FC = () => {
                   <X size={24} />
                 </button>
               </div>
-              <nav className="flex-grow flex flex-col items-center justify-center gap-6">
+              <nav className="flex-grow flex flex-col items-center justify-center gap-8">
                 {navLinks.map((link) => (
                   <motion.a
                     key={link.name}
                     href={link.href}
                     onClick={(e) => scrollToSection(e, link.href)}
-                    className="text-2xl text-blush-rose hover:text-near-black transition-colors"
+                    className="text-3xl text-blush-rose hover:text-near-black transition-colors"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: navLinks.indexOf(link) * 0.1 }}
@@ -136,8 +143,8 @@ const Navbar: React.FC = () => {
                       Book Now
                     </a>
                   </Button>
-                  <a 
-                    href="tel:2246079212" 
+                  <a
+                    href="tel:2246079212"
                     className="text-blush-rose font-medium text-lg mt-2"
                   >
                     224-607-9212

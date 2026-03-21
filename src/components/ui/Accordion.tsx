@@ -15,7 +15,14 @@ const AccordionItem: React.FC<{ item: FAQItem }> = ({ item }) => {
       <motion.header
         initial={false}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center py-5 cursor-pointer"
+        className="flex justify-between items-center py-5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blush-rose/50 rounded-lg px-2 -mx-2"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
       >
         <h3 className="font-medium text-lg text-near-black">{item.question}</h3>
         <div className="text-blush-rose">
