@@ -10,6 +10,7 @@ import Testimonials from "./components/sections/Testimonials"
 import Gallery from "./components/sections/Gallery"
 import FAQ from "./components/sections/FAQ"
 import Contact from "./components/sections/Contact"
+import SEOHead from "./components/seo/SEOHead"
 import { HelmetProvider } from "react-helmet-async"
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <HelmetProvider>
+      <SEOHead />
       <div className="bg-soft-sage">
         <Navbar />
         <main>

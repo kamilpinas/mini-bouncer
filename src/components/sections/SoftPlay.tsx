@@ -9,7 +9,11 @@ import {
 } from "lucide-react"
 import { useScrollReveal } from "../../hooks/useScrollReveal"
 
-const images = ["soft-1.jpg", "soft-2.jpg", "soft-3.jpg"]
+const images = [
+  { url: "soft-1.jpg", alt: "Modern white soft play set with climbers and ball pit" },
+  { url: "soft-2.jpg", alt: "Toddler soft play area with slide and soft blocks" },
+  { url: "soft-3.jpg", alt: "Aesthetic pastel soft play rental for birthday party" }
+]
 
 const SoftPlay: React.FC = () => {
   const { ref, controls } = useScrollReveal()
@@ -104,8 +108,8 @@ const SoftPlay: React.FC = () => {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
-                  src={images[currentIndex]}
-                  alt={`Soft play preview ${currentIndex + 1}`}
+                  src={images[currentIndex].url}
+                  alt={images[currentIndex].alt}
                   initial={{ opacity: 0, scale: 1.1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}

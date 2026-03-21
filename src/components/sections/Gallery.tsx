@@ -24,41 +24,49 @@ const Gallery: React.FC = () => {
       id: 1,
       url: `gallery-1.jpg`,
       link: "https://www.instagram.com/p/DJfHBtfSYi6",
+      alt: "White aesthetic bounce house with ball pit and balloons",
     },
     {
       id: 2,
       url: `gallery-2.jpg`,
       link: "https://www.instagram.com/p/C8zmw_UuEcC",
+      alt: "Modern mini bouncer for toddler birthday party",
     },
     {
       id: 3,
       url: `gallery-3.jpg`,
       link: "https://www.instagram.com/p/CzjXP1cuLGZ",
+      alt: "Aesthetic white bounce house set up outdoors",
     },
     {
       id: 4,
       url: `gallery-4.jpg`,
       link: "https://www.instagram.com/p/Cx1Yvn9Ocn3",
+      alt: "Toddler playing in a clean, safe mini bounce house",
     },
     {
       id: 5,
       url: `gallery-5.jpg`,
       link: "https://www.instagram.com/p/CxRlZJ2Ou8D/",
+      alt: "Luxury bounce house rental with custom balloon arch",
     },
     {
       id: 6,
       url: `gallery-6.jpg`,
       link: "https://www.instagram.com/p/Cv5XaWfOjgv",
+      alt: "Small white bounce house perfect for indoor parties",
     },
     {
       id: 7,
       url: `gallery-7.jpg`,
       link: "https://www.instagram.com/p/CvlOi-0O45u",
+      alt: "Mini bouncer with slide and ball pit integration",
     },
     {
       id: 8,
       url: `gallery-8.jpg`,
       link: "https://www.instagram.com/p/CvDWpXtuo5l",
+      alt: "Pastel themed bounce house for a stylish kids event",
     },
   ]
 
@@ -88,7 +96,7 @@ const Gallery: React.FC = () => {
             >
               <img
                 src={photo.url}
-                alt={`Mini Bouncer Gallery ${photo.id}`}
+                alt={photo.alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 onError={(e) => {
                   ;(e.target as HTMLImageElement).style.display = "none"

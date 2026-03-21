@@ -73,6 +73,7 @@ const Hero: React.FC = () => {
                 loop
                 muted
                 playsInline
+                title="Mini Bouncer Modern White Castle"
               />
             </motion.div>
             <motion.div
