@@ -93,7 +93,7 @@ const SoftPlay: React.FC = () => {
                   <p className="text-[10px] uppercase tracking-wider text-dark-muted font-bold">
                     Best For
                   </p>
-                  <p className="font-medium text-near-black">Ages 0-4 Years</p>
+                  <p className="font-medium text-near-black">Ages 0-5 Years</p>
                 </div>
               </div>
             </div>
