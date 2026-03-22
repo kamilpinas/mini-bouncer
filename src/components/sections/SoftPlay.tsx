@@ -10,9 +10,18 @@ import {
 import { useScrollReveal } from "../../hooks/useScrollReveal"
 
 const images = [
-  { url: "soft-1.jpg", alt: "Modern white soft play set with climbers and ball pit" },
-  { url: "soft-2.jpg", alt: "Toddler soft play area with slide and soft blocks" },
-  { url: "soft-3.jpg", alt: "Aesthetic pastel soft play rental for birthday party" }
+  {
+    url: "soft-1.jpg",
+    alt: "Modern white soft play set with climbers and ball pit",
+  },
+  {
+    url: "soft-2.jpg",
+    alt: "Toddler soft play area with slide and soft blocks",
+  },
+  {
+    url: "soft-3.jpg",
+    alt: "Aesthetic pastel soft play rental for birthday party",
+  },
 ]
 
 const SoftPlay: React.FC = () => {
@@ -101,6 +110,16 @@ const SoftPlay: React.FC = () => {
                 </div>
               </div>
             </div>
+            <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl">
+              <p className="text-xs font-bold text-near-black uppercase tracking-wider mb-1 flex items-center gap-2">
+                <Sparkles className="w-3 h-3 text-blush-rose" /> Now accepting
+                inquiries
+              </p>
+              <p className="text-[10px] text-dark-muted leading-relaxed">
+                Be the first to have a modern soft play set at your event.
+                Mention "Soft Play" in your booking request!
+              </p>
+            </div>
           </div>
 
           <div className="w-full md:w-1/2 relative">
@@ -147,19 +166,6 @@ const SoftPlay: React.FC = () => {
                     }`}
                   />
                 ))}
-              </div>
-
-              <div className="absolute bottom-8 left-8 right-8">
-                <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl">
-                  <p className="text-xs font-bold text-near-black uppercase tracking-wider mb-1 flex items-center gap-2">
-                    <Sparkles className="w-3 h-3 text-blush-rose" /> Now
-                    accepting inquiries
-                  </p>
-                  <p className="text-[10px] text-dark-muted leading-relaxed">
-                    Be the first to have a modern soft play set at your event.
-                    Mention "Soft Play" in your booking request!
-                  </p>
-                </div>
               </div>
             </div>
 
