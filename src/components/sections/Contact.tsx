@@ -40,6 +40,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    email: "",
     location: "",
     bouncer: bouncerSlug || "",
     duration: "Up to 6 hours",
@@ -93,6 +94,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     const errors: Record<string, boolean> = {
       name: !formData.name.trim(),
       phone: !formData.phone.trim(),
+      email: !formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email),
       bouncer: !formData.bouncer,
       location: !formData.location.trim(),
       date: !selectedDate,
@@ -121,6 +123,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
         price: currentPrice,
         user_name: formData.name,
         user_phone: formData.phone,
+        user_email: formData.email,
         message: formData.message,
       }
 
@@ -196,6 +199,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                       setFormData({
                         name: "",
                         phone: "",
+                        email: "",
                         location: "",
                         bouncer: "",
                         duration: "Up to 6 hours",
@@ -604,6 +608,61 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     </div>
                   </div>
 
+                  {/* Step 8: Email */}
+                  <div className="grid gap-8">
+                    <div className="space-y-4">
+                      <label
+                        className={twMerge(
+                          "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
+                          formErrors.email ? "text-red-500" : "text-near-black",
+                        )}
+                      >
+                        <span
+                          className={twMerge(
+                            "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
+                            formErrors.email
+                              ? "bg-red-500 text-white"
+                              : "bg-soft-sage text-near-black",
+                          )}
+                        >
+                          8
+                        </span>
+                        Email Address{" "}
+                        {formErrors.email && (
+                          <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
+                            (Valid email required)
+                          </span>
+                        )}
+                      </label>
+                      <div className="relative">
+                        <Mail
+                          className={twMerge(
+                            "absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors",
+                            formErrors.email
+                              ? "text-red-500"
+                              : "text-blush-rose",
+                          )}
+                          size={18}
+                        />
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          placeholder="your@email.com"
+                          value={formData.email}
+                          onChange={handleChange}
+                          className={twMerge(
+                            "w-full pl-12 pr-5 py-3 rounded-xl border-2 transition-all bg-soft-sage/5 text-sm font-medium text-near-black placeholder:text-dark-muted/40 focus:outline-none",
+                            formErrors.email
+                              ? "border-red-500 bg-red-500/5 focus:ring-4 focus:ring-red-500/5"
+                              : "border-soft-sage/30 focus:border-blush-rose/60 focus:ring-4 focus:ring-blush-rose/5",
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 9: Message */}
                   <div className="grid gap-8">
                     <div className="space-y-4">
                       <label
@@ -616,7 +675,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                             "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors bg-soft-sage text-near-black",
                           )}
                         >
-                          8
+                          9
                         </span>
                         Message{" "}
                       </label>
