@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
-import { X, Maximize2, Check, Clock, Ruler } from "lucide-react"
+import { X, Maximize2, Check, Ruler } from "lucide-react"
 import SectionHeader from "../ui/SectionHeader"
 import Card from "../ui/Card"
 import { Button } from "../ui/Button"
@@ -237,7 +237,6 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                         scrollToSection(e, "contact", selectedSoftPlay.slug)
                         setSelectedSoftPlay(null)
                       }}
-                      f
                     >
                       Reserve This Setup
                     </a>
