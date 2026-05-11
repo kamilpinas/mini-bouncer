@@ -19,15 +19,21 @@ import {
 import { motion, type Variants } from "framer-motion"
 import { useScrollReveal } from "../../hooks/useScrollReveal"
 import { bouncers } from "../../data/bouncers"
+import { softPlayOptions } from "../../data/softPlay"
 import { Button } from "../ui/Button"
 import { twMerge } from "tailwind-merge"
 
 interface ContactProps {
   bouncerSlug?: string | null
+  softPlaySlug?: string | null
   onClearSelection: () => void
 }
 
-const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
+const Contact: React.FC<ContactProps> = ({
+  bouncerSlug,
+  softPlaySlug,
+  onClearSelection,
+}) => {
   const { ref, controls } = useScrollReveal()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -43,6 +49,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     email: "",
     location: "",
     bouncer: bouncerSlug || "",
+    softPlay: softPlaySlug || "",
     duration: "Up to 6 hours",
     message: "",
   })
@@ -55,6 +62,14 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     }
   }, [bouncerSlug])
 
+  // Update soft play if slug changes from outside
+  React.useEffect(() => {
+    if (softPlaySlug) {
+      setFormData((prev) => ({ ...prev, softPlay: softPlaySlug }))
+      setFormErrors((prev) => ({ ...prev, softPlay: false }))
+    }
+  }, [softPlaySlug])
+
   const variants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -64,15 +79,25 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     },
   }
 
-  // Find selected bouncer for pricing
+  // Find selected items for pricing
   const selectedBouncerData = useMemo(() => {
     return bouncers.find((b) => b.slug === formData.bouncer)
   }, [formData.bouncer])
 
+  const selectedSoftPlayData = useMemo(() => {
+    return softPlayOptions.find((s) => s.slug === formData.softPlay)
+  }, [formData.softPlay])
+
   const currentPrice = useMemo(() => {
-    if (!selectedBouncerData) return null
-    return selectedBouncerData.price
-  }, [selectedBouncerData])
+    let total = 0
+    if (selectedBouncerData) {
+      total += parseInt(selectedBouncerData.price.replace("$", ""))
+    }
+    if (selectedSoftPlayData) {
+      total += parseInt(selectedSoftPlayData.price.replace("$", ""))
+    }
+    return total > 0 ? `$${total}` : null
+  }, [selectedBouncerData, selectedSoftPlayData])
 
   const timeSlots = [
     "9:00 AM",
@@ -95,7 +120,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
       name: !formData.name.trim(),
       phone: !formData.phone.trim(),
       email: !formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email),
-      bouncer: !formData.bouncer,
+      selection: !formData.bouncer && !formData.softPlay,
       location: !formData.location.trim(),
       date: !selectedDate,
       time: !selectedTime,
@@ -114,8 +139,15 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
     setIsLoading(true)
 
     try {
+      const selectionText = [
+        selectedBouncerData ? `Bouncer: ${selectedBouncerData.name}` : "",
+        selectedSoftPlayData ? `Soft Play: ${selectedSoftPlayData.name}` : "",
+      ]
+        .filter(Boolean)
+        .join(" & ")
+
       const templateParams = {
-        bouncer_name: selectedBouncerData?.name || formData.bouncer,
+        bouncer_name: selectionText,
         location: formData.location,
         date: selectedDate?.toLocaleDateString(),
         time: selectedTime,
@@ -156,8 +188,15 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
   }
 
   const handleBouncerSelect = (slug: string) => {
-    setFormData((prev) => ({ ...prev, bouncer: slug }))
-    setFormErrors((prev) => ({ ...prev, bouncer: false }))
+    const newVal = formData.bouncer === slug ? "" : slug
+    setFormData((prev) => ({ ...prev, bouncer: newVal }))
+    setFormErrors((prev) => ({ ...prev, selection: false }))
+  }
+
+  const handleSoftPlaySelect = (slug: string) => {
+    const newVal = formData.softPlay === slug ? "" : slug
+    setFormData((prev) => ({ ...prev, softPlay: newVal }))
+    setFormErrors((prev) => ({ ...prev, selection: false }))
   }
 
   return (
@@ -185,7 +224,9 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   <p className="text-dark-muted text-lg max-w-md leading-relaxed">
                     We've received your request for the{" "}
                     <span className="text-near-black font-semibold">
-                      {selectedBouncerData?.name}
+                      {[selectedBouncerData?.name, selectedSoftPlayData?.name]
+                        .filter(Boolean)
+                        .join(" and ")}
                     </span>
                     . We'll contact you shortly to confirm the details.
                   </p>
@@ -202,10 +243,12 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                         email: "",
                         location: "",
                         bouncer: "",
+                        softPlay: "",
                         duration: "Up to 6 hours",
                         message: "",
                       })
                       setFormErrors({})
+                      onClearSelection()
                     }}
                   >
                     Back to Booking
@@ -218,13 +261,13 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   className="flex-grow space-y-12"
                   noValidate
                 >
-                  {/* Step 1: Bouncer Choice */}
-                  <div className="space-y-6">
+                  {/* Step 1: Selection Choice */}
+                  <div className="space-y-10">
                     <div className="flex items-center justify-between">
                       <label
                         className={twMerge(
                           "text-sm font-bold uppercase tracking-[0.2em] flex items-center gap-2 transition-colors",
-                          formErrors.bouncer
+                          formErrors.selection
                             ? "text-red-500"
                             : "text-near-black",
                         )}
@@ -232,83 +275,149 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                         <span
                           className={twMerge(
                             "w-5 h-5 rounded-full flex items-center justify-center text-[9px] transition-colors",
-                            formErrors.bouncer
+                            formErrors.selection
                               ? "bg-red-500 text-white"
                               : "bg-soft-sage text-near-black",
                           )}
                         >
                           1
                         </span>
-                        The Bouncer{" "}
-                        {formErrors.bouncer && (
+                        Your Selection{" "}
+                        {formErrors.selection && (
                           <span className="ml-2 text-[10px] tracking-normal lowercase opacity-70">
-                            (Please select one)
+                            (Please select at least one item)
                           </span>
                         )}
                       </label>
-                      {formData.bouncer && (
+                      {(formData.bouncer || formData.softPlay) && (
                         <button
                           type="button"
                           onClick={() => {
                             onClearSelection()
-                            setFormData((prev) => ({ ...prev, bouncer: "" }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              bouncer: "",
+                              softPlay: "",
+                            }))
                             setFormErrors({})
                           }}
                           className="text-sm font-bold text-blush-rose uppercase tracking-widest flex items-center gap-2 hover:opacity-70"
                         >
-                          <RotateCcw size={10} /> Reset
+                          <RotateCcw size={10} /> Reset Selection
                         </button>
                       )}
                     </div>
-                    <div
-                      className={twMerge(
-                        "grid grid-cols-4 gap-4 p-1 rounded-[28px] transition-all",
-                        formErrors.bouncer
-                          ? "ring-2 ring-red-500/20 bg-red-500/5"
-                          : "",
-                      )}
-                    >
-                      {bouncers.map((bouncer) => {
-                        const isSelected = formData.bouncer === bouncer.slug
-                        return (
-                          <button
-                            key={bouncer.id}
-                            type="button"
-                            onClick={() => handleBouncerSelect(bouncer.slug)}
-                            className={twMerge(
-                              "group relative aspect-square rounded-[24px] overflow-hidden border-2 transition-all duration-500 ",
-                              isSelected
-                                ? "border-blush-rose ring-8 ring-blush-rose/5 scale-105 shadow-xl"
-                                : "border-transparent hover:border-soft-sage hover:scale-102",
-                              formErrors.bouncer && !isSelected
-                                ? "border-red-500/30"
-                                : "",
-                            )}
-                          >
-                            <img
-                              src={bouncer.img}
-                              alt={bouncer.name}
+
+                    <div className="space-y-6">
+                      <p className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-widest ml-7">
+                        Choose a Bouncer
+                      </p>
+                      <div
+                        className={twMerge(
+                          "grid grid-cols-4 gap-4 p-1 rounded-[28px] transition-all",
+                          formErrors.selection &&
+                            !formData.bouncer &&
+                            !formData.softPlay
+                            ? "ring-2 ring-red-500/20 bg-red-500/5"
+                            : "",
+                        )}
+                      >
+                        {bouncers.map((bouncer) => {
+                          const isSelected = formData.bouncer === bouncer.slug
+                          return (
+                            <button
+                              key={bouncer.id}
+                              type="button"
+                              onClick={() => handleBouncerSelect(bouncer.slug)}
                               className={twMerge(
-                                "w-full h-full object-cover transition-all duration-700",
+                                "group relative aspect-square rounded-[24px] overflow-hidden border-2 transition-all duration-500 ",
                                 isSelected
-                                  ? "scale-110"
-                                  : "grayscale-[0.4] group-hover:grayscale-0",
+                                  ? "border-blush-rose ring-8 ring-blush-rose/5 scale-105 shadow-xl"
+                                  : "border-transparent hover:border-soft-sage hover:scale-102",
                               )}
-                            />
-                            {isSelected && (
-                              <div className="absolute inset-0 bg-blush-rose/10 flex items-center justify-center">
-                                <div className="bg-white rounded-full p-2 shadow-lg">
-                                  <Check
-                                    size={16}
-                                    className="text-blush-rose"
-                                    strokeWidth={3}
-                                  />
+                            >
+                              <img
+                                src={bouncer.img}
+                                alt={bouncer.name}
+                                className={twMerge(
+                                  "w-full h-full object-cover transition-all duration-700",
+                                  isSelected
+                                    ? "scale-110"
+                                    : "grayscale-[0.4] group-hover:grayscale-0",
+                                )}
+                              />
+                              {isSelected && (
+                                <div className="absolute inset-0 bg-blush-rose/10 flex items-center justify-center">
+                                  <div className="bg-white rounded-full p-2 shadow-lg">
+                                    <Check
+                                      size={16}
+                                      className="text-blush-rose"
+                                      strokeWidth={3}
+                                    />
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                          </button>
-                        )
-                      })}
+                              )}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <p className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-widest ml-7">
+                        Add Soft Play
+                      </p>
+                      <div
+                        className={twMerge(
+                          "grid grid-cols-4 gap-4 p-1 rounded-[28px] transition-all",
+                          formErrors.selection &&
+                            !formData.bouncer &&
+                            !formData.softPlay
+                            ? "ring-2 ring-red-500/20 bg-red-500/5"
+                            : "",
+                        )}
+                      >
+                        {softPlayOptions.map((softPlay) => {
+                          const isSelected = formData.softPlay === softPlay.slug
+                          return (
+                            <button
+                              key={softPlay.id}
+                              type="button"
+                              onClick={() =>
+                                handleSoftPlaySelect(softPlay.slug)
+                              }
+                              className={twMerge(
+                                "group relative aspect-square rounded-[24px] overflow-hidden border-2 transition-all duration-500 ",
+                                isSelected
+                                  ? "border-blush-rose ring-8 ring-blush-rose/5 scale-105 shadow-xl"
+                                  : "border-transparent hover:border-soft-sage hover:scale-102",
+                              )}
+                            >
+                              <img
+                                src={softPlay.img}
+                                alt={softPlay.name}
+                                className={twMerge(
+                                  "w-full h-full object-cover transition-all duration-700",
+                                  isSelected
+                                    ? "scale-110"
+                                    : "grayscale-[0.4] group-hover:grayscale-0",
+                                )}
+                              />
+                              {isSelected && (
+                                <div className="absolute inset-0 bg-blush-rose/10 flex items-center justify-center">
+                                  <div className="bg-white rounded-full p-2 shadow-lg">
+                                    <Check
+                                      size={16}
+                                      className="text-blush-rose"
+                                      strokeWidth={3}
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
 
@@ -608,8 +717,8 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                     </div>
                   </div>
 
-                  {/* Step 8: Email */}
-                  <div className="grid gap-8">
+                  {/* Step 8 & 9: Email Message*/}
+                  <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-4">
                       <label
                         className={twMerge(
@@ -660,10 +769,6 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                         />
                       </div>
                     </div>
-                  </div>
-
-                  {/* Step 9: Message */}
-                  <div className="grid gap-8">
                     <div className="space-y-4">
                       <label
                         className={twMerge(
@@ -721,32 +826,55 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                   </h2>
                 </div>
 
-                <div className="space-y-8">
-                  {/* Selected Bouncer Pass */}
+                <div className="space-y-6">
+                  {/* Selected Items Pass */}
                   <div className="relative">
                     <div className="absolute -left-12 top-1/2 -translate-y-1/2 w-1 h-12 bg-blush-rose rounded-r-full" />
-                    {formData.bouncer ? (
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-4">
-                          <div className="w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-white/10">
-                            <img
-                              src={selectedBouncerData?.img}
-                              alt={selectedBouncerData?.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <p className="font-serif text-xl leading-tight">
-                              {selectedBouncerData?.name}
-                            </p>
-                            <div className="flex items-center gap-2 mt-1 text-soft-sage/60 text-xs">
-                              <Clock size={12} />
-                              <span>{formData.duration} rental</span>
+                    {formData.bouncer || formData.softPlay ? (
+                      <div className="space-y-6">
+                        {/* Selected Bouncer */}
+                        {selectedBouncerData && (
+                          <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-white/10">
+                              <img
+                                src={selectedBouncerData.img}
+                                alt={selectedBouncerData.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div>
+                              <p className="font-serif text-lg leading-tight">
+                                {selectedBouncerData.name}
+                              </p>
+                              <p className="text-soft-sage/60 text-[10px] uppercase tracking-widest font-bold mt-1">
+                                Bouncer Rental
+                              </p>
                             </div>
                           </div>
-                        </div>
+                        )}
 
-                        <div className="flex items-center gap-3 py-3 border-y border-white/10">
+                        {/* Selected Soft Play */}
+                        {selectedSoftPlayData && (
+                          <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-white/10">
+                              <img
+                                src={selectedSoftPlayData.img}
+                                alt={selectedSoftPlayData.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div>
+                              <p className="font-serif text-lg leading-tight">
+                                {selectedSoftPlayData.name}
+                              </p>
+                              <p className="text-soft-sage/60 text-[10px] uppercase tracking-widest font-bold mt-1">
+                                Soft Play Setup
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-3 py-4 border-y border-white/10">
                           <CalendarDays size={16} className="text-blush-rose" />
                           <p className="text-sm font-medium">
                             {selectedDate
@@ -776,7 +904,7 @@ const Contact: React.FC<ContactProps> = ({ bouncerSlug, onClearSelection }) => {
                           size={24}
                         />
                         <p className="text-sm text-white/30 italic px-6">
-                          Select your bouncer to build your pass
+                          Select your bouncer or soft play to build your pass
                         </p>
                       </div>
                     )}

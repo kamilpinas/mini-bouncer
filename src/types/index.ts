@@ -11,6 +11,17 @@ export interface Bouncer {
   price: string
 }
 
+export interface SoftPlay {
+  id: string
+  name: string
+  slug: string
+  price: string
+  description: string
+  includes: string[]
+  spaceRequired: string
+  img: string
+}
+
 export interface Testimonial {
   id: string
   quote: string

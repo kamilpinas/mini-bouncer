@@ -17,13 +17,21 @@ function App() {
   const [selectedBouncerSlug, setSelectedBouncerSlug] = useState<string | null>(
     null,
   )
+  const [selectedSoftPlaySlug, setSelectedSoftPlaySlug] = useState<string | null>(
+    null,
+  )
 
   const handleSelectBouncer = (slug: string) => {
     setSelectedBouncerSlug(slug)
   }
 
+  const handleSelectSoftPlay = (slug: string) => {
+    setSelectedSoftPlaySlug(slug)
+  }
+
   const handleClearSelection = () => {
     setSelectedBouncerSlug(null)
+    setSelectedSoftPlaySlug(null)
   }
 
   return (
@@ -34,7 +42,7 @@ function App() {
         <main>
           <Hero />
           <Bouncers onSelectBouncer={handleSelectBouncer} />
-          <SoftPlay />
+          <SoftPlay onSelectSoftPlay={handleSelectSoftPlay} />
           <HowItWorks />
           <WhyUs />
           <Testimonials />
@@ -42,6 +50,7 @@ function App() {
           <FAQ />
           <Contact
             bouncerSlug={selectedBouncerSlug}
+            softPlaySlug={selectedSoftPlaySlug}
             onClearSelection={handleClearSelection}
           />
         </main>

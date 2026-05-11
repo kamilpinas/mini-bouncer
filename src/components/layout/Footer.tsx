@@ -76,6 +76,15 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
+                  href="#soft-play"
+                  onClick={(e) => scrollToSection(e, "#soft-play")}
+                  className="text-sm text-soft-sage/70 hover:text-white transition"
+                >
+                  Soft Play
+                </a>
+              </li>
+              <li>
+                <a
                   href="#how-it-works"
                   onClick={(e) => scrollToSection(e, "how-it-works")}
                   className="text-sm text-soft-sage/70 hover:text-white transition"

@@ -1,184 +1,253 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
-import {
-  Sparkles,
-  Calendar,
-  Baby,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react"
+import { X, Maximize2, Check, Clock, Ruler } from "lucide-react"
+import SectionHeader from "../ui/SectionHeader"
+import Card from "../ui/Card"
+import { Button } from "../ui/Button"
+import { softPlayOptions } from "../../data/softPlay"
 import { useScrollReveal } from "../../hooks/useScrollReveal"
+import type { SoftPlay as SoftPlayType } from "../../types"
 
-const images = [
-  {
-    url: "soft-1.jpg",
-    alt: "Modern white soft play set with climbers and ball pit",
-  },
-  {
-    url: "soft-2.jpg",
-    alt: "Toddler soft play area with slide and soft blocks",
-  },
-  {
-    url: "soft-3.jpg",
-    alt: "Aesthetic pastel soft play rental for birthday party",
-  },
-]
+interface SoftPlayProps {
+  onSelectSoftPlay?: (slug: string) => void
+}
 
-const SoftPlay: React.FC = () => {
+const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
   const { ref, controls } = useScrollReveal()
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [selectedSoftPlay, setSelectedSoftPlay] = useState<SoftPlayType | null>(
+    null,
+  )
 
-  // Auto-slide functionality
+  // Prevent scroll when modal is open
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+    if (selectedSoftPlay) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [selectedSoftPlay])
 
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length)
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+    slug?: string,
+  ) => {
+    e.preventDefault()
+    if (slug && onSelectSoftPlay) {
+      onSelectSoftPlay(slug)
+    }
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({
+        block: "start",
+      })
+    }
   }
 
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
   }
 
-  const variants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      scale: 1,
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
     },
   }
 
   return (
-    <section id="soft-play" className="py-20 bg-white overflow-hidden">
+    <section id="soft-play" className="py-20 md:py-32 bg-soft-sage/10">
       <div className="container mx-auto px-4">
+        <SectionHeader
+          label="Soft Play"
+          title="Safe, Clean & Elegant Play Areas"
+          subtitle="Modern soft play setups designed for toddlers to explore, learn, and have endless fun in a safe environment."
+        />
+
         <motion.div
           ref={ref}
+          variants={containerVariants}
           initial="hidden"
           animate={controls}
-          variants={variants}
-          className="relative bg-soft-sage/20 rounded-[48px] p-8 md:p-16 border border-soft-sage/30 flex flex-col md:flex-row items-center gap-12"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {/* Decorative floating elements */}
-          <div className="absolute top-10 right-10 w-24 h-24 bg-blush-rose/5 rounded-full blur-2xl" />
-          <div className="absolute bottom-10 left-10 w-32 h-32 bg-soft-sage/40 rounded-full blur-3xl" />
-
-          <div className="w-full md:w-1/2 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-soft-sage/50 mb-6 shadow-sm">
-              <Sparkles className="w-4 h-4 text-blush-rose animate-pulse" />
-              <span className="text-[10px] font-bold text-near-black uppercase tracking-widest">
-                New for 2026
-              </span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-serif text-near-black mb-6 leading-tight">
-              Coming Soon: <br />
-              <span className="text-blush-rose italic">Soft Play Sets</span>
-            </h2>
-
-            <p className="text-lg text-dark-muted mb-8 leading-relaxed max-w-xl">
-              A soft, safe play area with climbers, slide and ball pit where
-              little ones can explore, play and have fun during the celebration.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6">
-              <div className="flex items-center gap-4 bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-white">
-                <div className="w-12 h-12 bg-soft-sage rounded-xl flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-near-black" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-dark-muted font-bold">
-                    Timeline
-                  </p>
-                  <p className="font-medium text-near-black">Starting in May</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-white">
-                <div className="w-12 h-12 bg-blush-rose/10 rounded-xl flex items-center justify-center">
-                  <Baby className="w-6 h-6 text-blush-rose" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-dark-muted font-bold">
-                    Best For
-                  </p>
-                  <p className="font-medium text-near-black">Ages 0-5 Years</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl">
-              <p className="text-xs font-bold text-near-black uppercase tracking-wider mb-1 flex items-center gap-2">
-                <Sparkles className="w-3 h-3 text-blush-rose" /> Now accepting
-                inquiries
-              </p>
-              <p className="text-[10px] text-dark-muted leading-relaxed">
-                Be the first to have a modern soft play set at your event.
-                Mention "Soft Play" in your booking request!
-              </p>
-            </div>
-          </div>
-
-          <div className="w-full md:w-1/2 relative">
-            <div className="aspect-square relative rounded-[40px] overflow-hidden shadow-2xl bg-white group">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentIndex}
-                  src={images[currentIndex].url}
-                  alt={images[currentIndex].alt}
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.7, ease: "easeInOut" }}
-                  className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
-                />
-              </AnimatePresence>
-
-              <div className="absolute inset-0 bg-gradient-to-t from-near-black/40 to-transparent pointer-events-none" />
-
-              {/* Carousel Controls */}
-              <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={prevImage}
-                  className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-near-black hover:bg-white transition-colors shadow-lg z-30"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-near-black hover:bg-white transition-colors shadow-lg z-30"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-
-              {/* Dots - Moved higher up to avoid overlap */}
-              <div className="absolute bottom-36 left-1/2 -translate-x-1/2 flex gap-2 z-30">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentIndex(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      currentIndex === i ? "bg-white w-6" : "bg-white/40"
-                    }`}
+          {softPlayOptions.map((option) => (
+            <motion.div
+              key={option.id}
+              variants={itemVariants}
+              className="flex flex-col h-full"
+            >
+              <Card
+                className="flex flex-col h-full group cursor-pointer"
+                onClick={() => setSelectedSoftPlay(option)}
+              >
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-white relative">
+                  <img
+                    src={option.img}
+                    alt={option.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                ))}
-              </div>
-            </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <Maximize2
+                      className="text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md"
+                      size={32}
+                    />
+                  </div>
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
+                    <span className="text-sm font-serif text-near-black font-bold">
+                      {option.price}
+                    </span>
+                  </div>
+                </div>
 
-            {/* Visual flourishes */}
-            <div className="absolute -top-6 -right-6 w-16 h-16 bg-soft-sage rounded-3xl -rotate-12 flex items-center justify-center shadow-lg border-4 border-white z-20">
-              <span className="text-2xl">🧸</span>
-            </div>
-            <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-blush-rose rounded-3xl rotate-12 flex items-center justify-center shadow-lg border-4 border-white z-20">
-              <span className="text-2xl">🥳</span>
-            </div>
-          </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-2xl font-serif text-near-black mb-3">
+                    {option.name}
+                  </h3>
+                  <p className="text-sm text-dark-muted mb-6 line-clamp-2">
+                    {option.description}
+                  </p>
+
+                  <div className="mt-auto space-y-4">
+                    <div className="flex items-center gap-2 text-[11px] font-bold text-dark-muted/60 uppercase tracking-wider">
+                      <Ruler className="w-3.5 h-3.5" />
+                      <span>Space: {option.spaceRequired}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-soft-sage/20">
+                      <button className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose transition-colors">
+                        View Items
+                      </button>
+                      <a
+                        href="#contact"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          scrollToSection(e, "contact", option.slug)
+                        }}
+                        className="bg-blush-rose text-white text-xs font-bold px-5 py-2.5 rounded-full hover:bg-blush-rose/90 transition-all shadow-sm shadow-blush-rose/20"
+                      >
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
+
+      {/* Modal Details */}
+      <AnimatePresence>
+        {selectedSoftPlay && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedSoftPlay(null)}
+              className="absolute inset-0 bg-near-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative bg-white rounded-[32px] overflow-hidden max-w-7xl w-full shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+            >
+              <button
+                onClick={() => setSelectedSoftPlay(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full text-near-black hover:bg-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+
+              <div className="w-full md:w-3/5 bg-soft-sage flex items-center justify-center overflow-hidden">
+                <img
+                  src={selectedSoftPlay.img}
+                  alt={selectedSoftPlay.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="w-full md:w-2/5 m-8 md:m-12 flex flex-col overflow-y-auto">
+                <div className="mb-auto">
+                  <span className="text-xs font-medium text-blush-rose tracking-widest uppercase">
+                    Soft Play Collection
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-serif mt-2 mb-2">
+                    {selectedSoftPlay.name}
+                  </h2>
+                  <p className="text-dark-muted leading-relaxed text-sm mb-2">
+                    {selectedSoftPlay.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-4 mb-2">
+                    <div>
+                      <p className="text-[10px] font-bold text-near-black uppercase tracking-widest">
+                        Pricing
+                      </p>
+                      <p className="text-xl font-serif text-near-black">
+                        {selectedSoftPlay.price}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-near-black uppercase tracking-widest">
+                        Space Required
+                      </p>
+                      <p className="text-sm font-medium">
+                        {selectedSoftPlay.spaceRequired}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="text-xs font-bold text-near-black uppercase tracking-widest">
+                      What's Included:
+                    </h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                      {selectedSoftPlay.includes.map((item, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center text-sm text-dark-muted"
+                        >
+                          <Check className="w-4 h-4 text-blush-rose mr-2 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-12">
+                  <Button className="w-full" asChild>
+                    <a
+                      href="#contact"
+                      onClick={(e) => {
+                        scrollToSection(e, "contact", selectedSoftPlay.slug)
+                        setSelectedSoftPlay(null)
+                      }}
+                      f
+                    >
+                      Reserve This Setup
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

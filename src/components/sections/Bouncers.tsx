@@ -31,7 +31,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
     id: string,
-    slug?: string
+    slug?: string,
   ) => {
     e.preventDefault()
     if (slug && onSelectBouncer) {
@@ -85,7 +85,10 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
               variants={itemVariants}
               className="flex flex-col h-full"
             >
-              <Card className="flex flex-col h-full group cursor-pointer" onClick={() => setSelectedBouncer(bouncer)}>
+              <Card
+                className="flex flex-col h-full group cursor-pointer"
+                onClick={() => setSelectedBouncer(bouncer)}
+              >
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-soft-sage relative">
                   <img
                     src={bouncer.img}
@@ -93,19 +96,24 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <Maximize2 className="text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md" size={32} />
+                    <Maximize2
+                      className="text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md"
+                      size={32}
+                    />
                   </div>
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-h3 !text-2xl">{bouncer.name}</h3>
-                  
+
                   <div className="mt-4 space-y-2 flex-grow">
                     <div className="p-3 bg-soft-sage/10 rounded-xl border border-soft-sage/20">
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider flex items-center">
                           <Clock className="w-3 h-3 mr-1" /> Up to 6 Hours
                         </span>
-                        <span className="text-lg font-serif text-near-black">{bouncer.price}</span>
+                        <span className="text-lg font-serif text-near-black">
+                          {bouncer.price}
+                        </span>
                       </div>
                     </div>
 
@@ -120,16 +128,14 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-soft-sage/20 flex items-center justify-between">
-                    <button
-                      className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose focus:outline-none focus:text-blush-rose transition-colors"
-                    >
+                    <button className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose focus:outline-none focus:text-blush-rose transition-colors">
                       View Details
                     </button>
                     <a
                       href="#contact"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        scrollToSection(e, "contact", bouncer.slug);
+                        e.stopPropagation()
+                        scrollToSection(e, "contact", bouncer.slug)
                       }}
                       className="bg-blush-rose text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-blush-rose/90 transition-all shadow-sm shadow-blush-rose/20"
                     >
@@ -141,10 +147,10 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
             </motion.div>
           ))}
         </motion.div>
-        
+
         <p className="text-center text-sm text-dark-muted mt-16 max-w-2xl mx-auto italic">
-          📍 Free delivery up to 15 miles from Volo. Travel fees may
-          apply for further locations. Contact us for custom quotes!
+          📍 Free delivery up to 15 miles from Volo. Travel fees may apply for
+          further locations. Contact us for custom quotes!
         </p>
       </div>
 
@@ -163,7 +169,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative bg-white rounded-[32px] overflow-hidden max-w-4xl w-full shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+              className="relative bg-white rounded-[32px] overflow-hidden max-w-6xl w-full shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
             >
               <button
                 onClick={() => setSelectedBouncer(null)}
@@ -171,7 +177,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
               >
                 <X size={24} />
               </button>
-              
+
               <div className="w-full md:w-3/5 bg-soft-sage flex items-center justify-center overflow-hidden">
                 <img
                   src={selectedBouncer.img}
@@ -179,7 +185,7 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              
+
               <div className="w-full md:w-2/5 p-8 md:p-10 flex flex-col overflow-y-auto">
                 <div className="mb-auto">
                   <span className="text-xs font-medium text-blush-rose tracking-widest uppercase">
@@ -191,37 +197,60 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                   <p className="text-dark-muted leading-relaxed text-sm">
                     {selectedBouncer.description}
                   </p>
-                  
+
                   <div className="mt-6 p-4 bg-soft-sage/10 rounded-2xl border border-soft-sage/20">
-                    <p className="text-[10px] font-bold text-near-black uppercase tracking-widest mb-3">Rental Pricing</p>
+                    <p className="text-[10px] font-bold text-near-black uppercase tracking-widest mb-3">
+                      Rental Pricing
+                    </p>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-dark-muted flex items-center">
-                        <Clock className="w-4 h-4 mr-2 text-blush-rose" /> Up to 6 Hours
+                        <Clock className="w-4 h-4 mr-2 text-blush-rose" /> Up to
+                        6 Hours
                       </span>
-                      <span className="text-xl font-serif text-near-black">{selectedBouncer.price}</span>
+                      <span className="text-xl font-serif text-near-black">
+                        {selectedBouncer.price}
+                      </span>
                     </div>
                   </div>
 
                   <div className="mt-8 space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">📏</div>
+                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">
+                        📏
+                      </div>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">Dimensions</p>
-                        <p className="text-sm font-medium">{selectedBouncer.size}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">
+                          Dimensions
+                        </p>
+                        <p className="text-sm font-medium">
+                          {selectedBouncer.size}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">👶</div>
+                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">
+                        👶
+                      </div>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">Age Range</p>
-                        <p className="text-sm font-medium">Ages {selectedBouncer.ageRange}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">
+                          Age Range
+                        </p>
+                        <p className="text-sm font-medium">
+                          Ages {selectedBouncer.ageRange}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">📍</div>
+                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">
+                        📍
+                      </div>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">Setting</p>
-                        <p className="text-sm font-medium">{selectedBouncer.setting}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">
+                          Setting
+                        </p>
+                        <p className="text-sm font-medium">
+                          {selectedBouncer.setting}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -232,8 +261,8 @@ const Bouncers: React.FC<BouncersProps> = ({ onSelectBouncer }) => {
                     <a
                       href="#contact"
                       onClick={(e) => {
-                        scrollToSection(e, "contact", selectedBouncer.slug);
-                        setSelectedBouncer(null);
+                        scrollToSection(e, "contact", selectedBouncer.slug)
+                        setSelectedBouncer(null)
                       }}
                     >
                       Book This Bouncer
