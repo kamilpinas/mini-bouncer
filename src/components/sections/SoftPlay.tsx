@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
-import { X, Maximize2, Check, Ruler } from "lucide-react"
+import { X, Maximize2, Check, Ruler, Clock } from "lucide-react"
 import SectionHeader from "../ui/SectionHeader"
 import Card from "../ui/Card"
 import { Button } from "../ui/Button"
@@ -67,7 +67,7 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
   }
 
   return (
-    <section id="soft-play" className="py-20 md:py-32 bg-soft-sage/10">
+    <section id="soft-play" className="py-20 md:py-32 bg-white">
       <div className="container mx-auto px-4">
         <SectionHeader
           label="Soft Play"
@@ -92,7 +92,7 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                 className="flex flex-col h-full group cursor-pointer"
                 onClick={() => setSelectedSoftPlay(option)}
               >
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-white relative">
+                <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-soft-sage relative">
                   <img
                     src={option.img}
                     alt={option.name}
@@ -104,48 +104,64 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                       size={32}
                     />
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
-                    <span className="text-sm font-serif text-near-black font-bold">
-                      {option.price}
-                    </span>
-                  </div>
                 </div>
 
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-2xl font-serif text-near-black mb-3">
-                    {option.name}
-                  </h3>
-                  <p className="text-sm text-dark-muted mb-6 line-clamp-2">
-                    {option.description}
-                  </p>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-h3 !text-2xl">{option.name}</h3>
 
-                  <div className="mt-auto space-y-4">
-                    <div className="flex items-center gap-2 text-[11px] font-bold text-dark-muted/60 uppercase tracking-wider">
-                      <Ruler className="w-3.5 h-3.5" />
-                      <span>Space: {option.spaceRequired}</span>
+                  <div className="mt-4 space-y-2 flex-grow">
+                    <div className="p-3 bg-soft-sage/10 rounded-xl border border-soft-sage/20">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider flex items-center">
+                          <Clock className="w-3 h-3 mr-1" /> Full Day Rental
+                        </span>
+                        <span className="text-lg font-serif text-near-black">
+                          {option.price}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-soft-sage/20">
-                      <button className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose transition-colors">
-                        View Items
-                      </button>
-                      <a
-                        href="#contact"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          scrollToSection(e, "contact", option.slug)
-                        }}
-                        className="bg-blush-rose text-white text-xs font-bold px-5 py-2.5 rounded-full hover:bg-blush-rose/90 transition-all shadow-sm shadow-blush-rose/20"
-                      >
-                        Book Now
-                      </a>
-                    </div>
+                    <ul className="space-y-1.5 pt-2">
+                      <li className="flex items-start text-xs">
+                        <Ruler className="w-3.5 h-3.5 text-blush-rose mr-2 flex-shrink-0 mt-0.5" />
+                        <span className="text-dark-muted">
+                          {option.spaceRequired} Space Required
+                        </span>
+                      </li>
+                      {option.includes.slice(0, 2).map((item, i) => (
+                        <li key={i} className="flex items-start text-xs">
+                          <Check className="w-3.5 h-3.5 text-blush-rose mr-2 flex-shrink-0 mt-0.5" />
+                          <span className="text-dark-muted">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-soft-sage/20 flex items-center justify-between">
+                    <button className="text-[11px] font-bold text-dark-muted/40 uppercase tracking-widest hover:text-blush-rose focus:outline-none focus:text-blush-rose transition-colors">
+                      View Details
+                    </button>
+                    <a
+                      href="#contact"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        scrollToSection(e, "contact", option.slug)
+                      }}
+                      className="bg-blush-rose text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-blush-rose/90 transition-all shadow-sm shadow-blush-rose/20"
+                    >
+                      Book Now
+                    </a>
                   </div>
                 </div>
               </Card>
             </motion.div>
           ))}
         </motion.div>
+
+        <p className="text-center text-sm text-dark-muted mt-16 max-w-2xl mx-auto italic">
+          📍 Free delivery up to 15 miles from Volo. Travel fees may apply for
+          further locations. Contact us for custom quotes!
+        </p>
       </div>
 
       {/* Modal Details */}
