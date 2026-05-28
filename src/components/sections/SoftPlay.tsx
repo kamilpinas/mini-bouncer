@@ -113,7 +113,7 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                     <div className="p-3 bg-soft-sage/10 rounded-xl border border-soft-sage/20">
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider flex items-center">
-                          <Clock className="w-3 h-3 mr-1" /> Full Day Rental
+                          <Clock className="w-3 h-3 mr-1" /> Up to 6 hours
                         </span>
                         <span className="text-lg font-serif text-near-black">
                           {option.price}
