@@ -4,7 +4,7 @@ import { useAnimation, useInView } from 'framer-motion';
 export const useScrollReveal = () => {
   const controls = useAnimation();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   useEffect(() => {
     if (isInView) {

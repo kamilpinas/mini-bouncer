@@ -4,7 +4,11 @@ import { X, Maximize2, Check, Ruler, Clock } from "lucide-react"
 import SectionHeader from "../ui/SectionHeader"
 import Card from "../ui/Card"
 import { Button } from "../ui/Button"
-import { softPlayOptions } from "../../data/softPlay"
+import {
+  softPlayOptions,
+  softPlayAddons,
+  softPlayBundle,
+} from "../../data/softPlay"
 import { useScrollReveal } from "../../hooks/useScrollReveal"
 import type { SoftPlay as SoftPlayType } from "../../types"
 
@@ -13,7 +17,8 @@ interface SoftPlayProps {
 }
 
 const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
-  const { ref, controls } = useScrollReveal()
+  const { ref: optionsRef, controls: optionsControls } = useScrollReveal()
+  const { ref: addonsRef, controls: addonsControls } = useScrollReveal()
   const [selectedSoftPlay, setSelectedSoftPlay] = useState<SoftPlayType | null>(
     null,
   )
@@ -76,10 +81,10 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
         />
 
         <motion.div
-          ref={ref}
+          ref={optionsRef}
           variants={containerVariants}
           initial="hidden"
-          animate={controls}
+          animate={optionsControls}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {softPlayOptions.map((option) => (
@@ -157,6 +162,100 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Add-Ons Section */}
+        <motion.div
+          ref={addonsRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate={addonsControls}
+          className="mt-24 pt-24 border-t border-soft-sage/20"
+        >
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-serif mb-4">Add-Ons</h3>
+            <p className="text-dark-muted text-base italic max-w-2xl mx-auto">
+              Take your setup to the next level with our favorite extras!
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-8">
+            {softPlayAddons.map((addon, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-[320px] flex flex-col"
+              >
+                <Card className="flex flex-col h-full group">
+                  <div className="aspect-square rounded-2xl overflow-hidden bg-soft-sage relative">
+                    <img
+                      src={addon.img}
+                      alt={addon.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="text-xl font-serif text-near-black">
+                      {addon.name}
+                    </h3>
+
+                    <div className="mt-4 p-3 bg-soft-sage/10 rounded-xl border border-soft-sage/20">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-dark-muted/60 uppercase tracking-wider">
+                          Add-on Price
+                        </span>
+                        <span className="text-lg font-serif text-near-black">
+                          {addon.price}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-soft-sage/20">
+                      <a
+                        href="#contact"
+                        onClick={(e) => scrollToSection(e, "contact")}
+                        className="block w-full text-center bg-blush-rose/10 text-blush-rose text-xs font-bold py-2.5 rounded-full hover:bg-blush-rose hover:text-white transition-all"
+                      >
+                        Inquire Now
+                      </a>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bundle & Save Banner */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="bg-near-black rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blush-rose/10 rounded-full -mr-32 -mt-32 blur-3xl group-hover:bg-blush-rose/20 transition-colors duration-500" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-soft-sage/10 rounded-full -ml-32 -mb-32 blur-3xl group-hover:bg-soft-sage/20 transition-colors duration-500" />
+
+            <div className="relative z-10">
+              <span className="inline-block px-4 py-1.5 bg-blush-rose/20 text-blush-rose text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
+                Special Offer
+              </span>
+              <h3 className="text-white text-3xl md:text-4xl font-serif mb-4">
+                {softPlayBundle.title}
+              </h3>
+              <p className="text-white/70 text-lg max-w-2xl mx-auto mb-8">
+                {softPlayBundle.description}
+              </p>
+              <Button
+                variant="primary"
+                className="border-white text-near-black bg-white hover:bg-blush-rose hover:text-white hover:border-blush-rose"
+                asChild
+              >
+                <a
+                  href="#contact"
+                  onClick={(e) => scrollToSection(e, "contact")}
+                >
+                  Claim This Offer
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
 
         <p className="text-center text-sm text-dark-muted mt-16 max-w-2xl mx-auto italic">
           📍 Free delivery up to 15 miles from Volo. Travel fees may apply for
