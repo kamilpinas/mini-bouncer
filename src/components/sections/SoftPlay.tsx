@@ -169,7 +169,7 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
           variants={containerVariants}
           initial="hidden"
           animate={addonsControls}
-          className="mt-24 pt-24 border-t border-soft-sage/20"
+          className="mt-24 border-t border-soft-sage/20"
         >
           <div className="text-center mb-16">
             <h3 className="text-3xl md:text-4xl font-serif mb-4">Add-Ons</h3>
@@ -213,9 +213,9 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                       <a
                         href="#contact"
                         onClick={(e) => scrollToSection(e, "contact")}
-                        className="block w-full text-center bg-blush-rose/10 text-blush-rose text-xs font-bold py-2.5 rounded-full hover:bg-blush-rose hover:text-white transition-all"
+                        className="block w-full text-center bg-blush-rose text-white text-xs font-bold py-2.5 rounded-full hover:bg-blush-rose hover:text-white transition-all"
                       >
-                        Inquire Now
+                        Book Now
                       </a>
                     </div>
                   </div>
