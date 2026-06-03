@@ -128,8 +128,8 @@ export const softPlayOptions: SoftPlay[] = [
 ]
 
 export const softPlayAddons = [
-  { name: "Trampoline", price: "$100" },
-  { name: "Slide", price: "$25" },
+  { name: "Trampoline", price: "$100", img: "addon-1.jpg" },
+  { name: "Slide", price: "$25", img: "addon-2.jpg" },
 ]
 
 export const softPlayBundle = {
