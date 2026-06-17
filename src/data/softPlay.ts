@@ -125,6 +125,17 @@ export const softPlayOptions: SoftPlay[] = [
     spaceRequired: "20' x 10'",
     img: "soft-6.jpg",
   },
+  {
+    id: "petite-slide",
+    name: "The Petite with Slide",
+    slug: "petite-with-slide",
+    price: "$150",
+    description:
+      "A perfect compact setup for little ones, featuring a slide and suitable for both indoor and outdoor use.",
+    includes: ["Slide", "Indoor/Outdoor compatible", "Recommended for ages 1-5"],
+    spaceRequired: "6' x 8'",
+    img: "soft-7.jpg",
+  },
 ]
 
 export const softPlayAddons = [

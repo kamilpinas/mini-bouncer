@@ -295,40 +295,65 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                 />
               </div>
 
-              <div className="w-full md:w-2/5 m-8 md:m-12 flex flex-col overflow-y-auto">
+              <div className="w-full md:w-2/5 p-8 md:p-10 flex flex-col overflow-y-auto">
                 <div className="mb-auto">
                   <span className="text-xs font-medium text-blush-rose tracking-widest uppercase">
                     Soft Play Collection
                   </span>
-                  <h2 className="text-3xl md:text-4xl font-serif mt-2 mb-2">
+                  <h2 className="text-3xl md:text-4xl font-serif mt-2 mb-4">
                     {selectedSoftPlay.name}
                   </h2>
-                  <p className="text-dark-muted leading-relaxed text-sm mb-2">
+                  <p className="text-dark-muted leading-relaxed text-sm">
                     {selectedSoftPlay.description}
                   </p>
 
-                  <div className="grid grid-cols-2 gap-4 mb-2">
-                    <div>
-                      <p className="text-[10px] font-bold text-near-black uppercase tracking-widest">
-                        Pricing
-                      </p>
-                      <p className="text-xl font-serif text-near-black">
+                  <div className="mt-6 p-4 bg-soft-sage/10 rounded-2xl border border-soft-sage/20">
+                    <p className="text-[10px] font-bold text-near-black uppercase tracking-widest mb-3">
+                      Rental Pricing
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-dark-muted flex items-center">
+                        <Check className="w-4 h-4 mr-2 text-blush-rose" /> $150
+                        starting price
+                      </span>
+                      <span className="text-xl font-serif text-near-black">
                         {selectedSoftPlay.price}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-near-black uppercase tracking-widest">
-                        Space Required
-                      </p>
-                      <p className="text-sm font-medium">
-                        {selectedSoftPlay.spaceRequired}
-                      </p>
+                      </span>
                     </div>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="mt-8 space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">
+                        📏
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">
+                          Dimensions
+                        </p>
+                        <p className="text-sm font-medium">
+                          {selectedSoftPlay.spaceRequired} Space Required
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-soft-sage flex items-center justify-center text-lg">
+                        ✅
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-dark-muted/60 font-medium">
+                          What's Included
+                        </p>
+                        <p className="text-sm font-medium">
+                          Full setup & breakdown included
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 space-y-4">
                     <h4 className="text-xs font-bold text-near-black uppercase tracking-widest">
-                      What's Included:
+                      Setup Includes:
                     </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
                       {selectedSoftPlay.includes.map((item, i) => (
@@ -344,7 +369,7 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                   </div>
                 </div>
 
-                <div className="mt-12">
+                <div className="mt-10">
                   <Button className="w-full" asChild>
                     <a
                       href="#contact"
@@ -356,6 +381,9 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                       Reserve This Setup
                     </a>
                   </Button>
+                  <p className="text-[10px] text-center text-dark-muted mt-4 italic">
+                    * No deposit required to book
+                  </p>
                 </div>
               </div>
             </motion.div>
