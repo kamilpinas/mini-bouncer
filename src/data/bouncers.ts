@@ -53,4 +53,17 @@ export const bouncers: Bouncer[] = [
     img: "classic_white.jpg",
     price: "$350",
   },
+  {
+    id: "petite-slide",
+    name: "The Petite with Slide",
+    slug: "petite-with-slide",
+    description:
+      "A perfect compact setup for little ones, featuring a slide and suitable for both indoor and outdoor use.",
+    features: ["Ages 1-5", "Indoor/Outdoor", "6ft x 8ft"],
+    ageRange: "1-5",
+    size: "6ft x 8ft",
+    setting: "Indoor/Outdoor",
+    img: "petite_with_slide.jpg",
+    price: "$150",
+  },
 ]
