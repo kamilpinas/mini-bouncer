@@ -2,32 +2,6 @@ import type { Bouncer } from "../types"
 
 export const bouncers: Bouncer[] = [
   {
-    id: "mini-ball-pit",
-    name: "Mini with Ball Pit",
-    slug: "mini-with-ball-pit",
-    description:
-      "The perfect toddler play space combining a jumping area with a built-in ball pit. Colors of balls are included and customized to fit your party's theme.",
-    features: ["Ages 1-5", "Indoor/Outdoor", "8ft x 14.6ft", "Custom ball colors"],
-    ageRange: "1-5",
-    size: "8ft x 14.6ft",
-    setting: "Indoor/Outdoor",
-    img: "mini_with_balls.jpg",
-    price: "$300",
-  },
-  {
-    id: "mini-slide",
-    name: "Mini with Slide",
-    slug: "mini-with-slide",
-    description:
-      "Compact and exciting, this mini bouncer features an integrated slide designed specifically for little adventurers playing in smaller indoor or outdoor spaces.",
-    features: ["Ages 1-5", "Indoor/Outdoor", "8ft x 11ft"],
-    ageRange: "1-5",
-    size: "8ft x 11ft",
-    setting: "Indoor/Outdoor",
-    img: "mini_with_slide.jpg",
-    price: "$200",
-  },
-  {
     id: "big-slide",
     name: "Big with Slide",
     slug: "big-with-slide",
@@ -52,6 +26,37 @@ export const bouncers: Bouncer[] = [
     setting: "Outdoor Preferred",
     img: "classic_white.jpg",
     price: "$350",
+  },
+  {
+    id: "mini-ball-pit",
+    name: "Mini with Ball Pit",
+    slug: "mini-with-ball-pit",
+    description:
+      "The perfect toddler play space combining a jumping area with a built-in ball pit. Colors of balls are included and customized to fit your party's theme.",
+    features: [
+      "Ages 1-5",
+      "Indoor/Outdoor",
+      "8ft x 14.6ft",
+      "Custom ball colors",
+    ],
+    ageRange: "1-5",
+    size: "8ft x 14.6ft",
+    setting: "Indoor/Outdoor",
+    img: "mini_with_balls.jpg",
+    price: "$300",
+  },
+  {
+    id: "mini-slide",
+    name: "Mini with Slide",
+    slug: "mini-with-slide",
+    description:
+      "Compact and exciting, this mini bouncer features an integrated slide designed specifically for little adventurers playing in smaller indoor or outdoor spaces.",
+    features: ["Ages 1-5", "Indoor/Outdoor", "8ft x 11ft"],
+    ageRange: "1-5",
+    size: "8ft x 11ft",
+    setting: "Indoor/Outdoor",
+    img: "mini_with_slide.jpg",
+    price: "$200",
   },
   {
     id: "petite-slide",
