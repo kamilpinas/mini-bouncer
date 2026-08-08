@@ -17,7 +17,7 @@ export const faqs: FAQItem[] = [
     id: "faq3",
     question: "Is a deposit required to book?",
     answer:
-      "No deposit is required! We want to make the booking process as easy as possible for you. Just fill out our availability form and we will reach out to confirm everything.",
+      "Yes — we collect a non-refundable $100 deposit at the time of booking to secure your date. If you ever need to cancel — or if your event is cancelled due to weather — your full $100 is credited toward a future reservation, so it's never lost. The remaining balance is due at the time of delivery.",
   },
   {
     id: "faq4",
@@ -35,7 +35,7 @@ export const faqs: FAQItem[] = [
     id: "faq6",
     question: "What happens if it rains?",
     answer:
-      "Safety first! We do not set up in the rain. If rain is expected, the rental will be canceled or rescheduled at no cost to you.",
+      "Safety first! We do not set up in the rain. If rain or unsafe conditions are expected, we'll cancel or reschedule. Your $100 deposit is never lost — it's applied toward a future reservation, so you can simply rebook when the weather cooperates.",
   },
   {
     id: "faq7",

@@ -47,12 +47,16 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
       title: "Terms of Service",
       sections: [
         {
-          heading: "Booking & Payments",
-          text: "No deposit is required to secure your date. Full payment is due at the time of delivery via Zelle, PayPal, or Cash. By booking, you agree to provide a safe and clear space for the bouncer setup.",
+          heading: "Booking & Deposit",
+          text: "A non-refundable $100 deposit is collected at the time of booking to secure your date. The remaining balance is due at the time of delivery via Zelle, PayPal, or Cash. By booking, you agree to provide a safe and clear space for the bouncer setup.",
+        },
+        {
+          heading: "Cancellation Policy",
+          text: "The $100 booking deposit is non-refundable. However, if you need to cancel your reservation — or if we cancel due to weather or unsafe conditions — your full $100 deposit will be credited toward a future reservation. There is no deadline pressure: your deposit stays on file and can be applied whenever you rebook.",
         },
         {
           heading: "Weather & Rain Policy",
-          text: "Safety first! We do not set up in the rain. If rain or unsafe wind conditions are expected, the rental will be canceled or rescheduled at no cost to you. We reserve the right to cancel if conditions are deemed unsafe for children or equipment.",
+          text: "Safety first! We do not set up in the rain. If rain or unsafe wind conditions are expected, the rental will be canceled or rescheduled. In the event of a weather cancellation, your $100 deposit is applied toward a future reservation rather than lost. We reserve the right to cancel if conditions are deemed unsafe for children or equipment.",
         },
         {
           heading: "Delivery & Setup",

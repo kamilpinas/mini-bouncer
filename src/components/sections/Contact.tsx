@@ -253,7 +253,10 @@ const Contact: React.FC<ContactProps> = ({
                         .filter(Boolean)
                         .join(", ")}
                     </span>
-                    . We'll contact you shortly to confirm the details.
+                    . We'll contact you shortly to confirm the details and
+                    arrange your non-refundable $100 deposit to lock in your
+                    date. If you ever need to cancel — or weather cancels your
+                    event — that $100 is credited toward a future booking.
                   </p>
                   <Button
                     className="mt-12 px-10 py-6 text-lg"
@@ -1088,14 +1091,19 @@ const Contact: React.FC<ContactProps> = ({
                   </Button>
                   <div className="flex flex-wrap justify-center gap-4 mt-6">
                     <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
-                      <Check size={10} className="mr-1.5 text-green-500" /> No
-                      Deposit
+                      <Check size={10} className="mr-1.5 text-green-500" /> $100
+                      Deposit Credited if Cancelled
                     </span>
                     <span className="flex items-center text-[9px] font-bold text-white/30 uppercase tracking-widest">
                       <Check size={10} className="mr-1.5 text-green-500" />{" "}
                       Sanitized
                     </span>
                   </div>
+                  <p className="text-[9px] text-white/30 text-center leading-relaxed mt-4">
+                    A non-refundable $100 deposit secures your date. If you
+                    cancel — or weather cancels your event — it's applied toward
+                    a future reservation.
+                  </p>
                 </div>
               </div>
             </div>

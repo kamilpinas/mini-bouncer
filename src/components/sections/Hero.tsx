@@ -122,7 +122,7 @@ const Hero: React.FC = () => {
             <span className="hidden sm:inline">·</span>
             <span>✓ Same-Day Setup</span>
             <span className="hidden sm:inline">·</span>
-            <span>✓ No Deposit Required</span>
+            <span>✓ Deposit Credited if Cancelled</span>
           </motion.div>
         </motion.div>
       </div>

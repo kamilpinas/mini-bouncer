@@ -382,7 +382,8 @@ const SoftPlay: React.FC<SoftPlayProps> = ({ onSelectSoftPlay }) => {
                     </a>
                   </Button>
                   <p className="text-[10px] text-center text-dark-muted mt-4 italic">
-                    * No deposit required to book
+                    * $100 deposit to book — credited to a future date if
+                    cancelled or rained out
                   </p>
                 </div>
               </div>

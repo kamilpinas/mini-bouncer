@@ -6,7 +6,7 @@ const SEOHead: React.FC = () => {
   const title =
     "Mini Bouncer | Modern & Aesthetic Bounce House Rentals | Volo, IL"
   const description =
-    "Mini Bouncer offers modern, clean, and aesthetic bounce house rentals for toddlers and young children in Volo, IL and surrounding suburbs. No deposit required. Book your party today!"
+    "Mini Bouncer offers modern, clean, and aesthetic bounce house rentals for toddlers and young children in Volo, IL and surrounding suburbs. Just a $100 deposit to book, credited toward a future date if you cancel. Book your party today!"
   const keywords =
     "bounce house rental, Volo IL bounce house, kids party rental, toddler bounce house, Volo, bounce house delivery, modern bounce house, pastel bounce house, party rental Volo suburbs, bounce house near me"
   const canonicalUrl = "https://mini-bouncer.com"

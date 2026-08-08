@@ -29,9 +29,9 @@ const features = [
   {
     icon: Shield,
     emoji: "🛡️",
-    title: "No Deposit Required",
+    title: "Risk-Free Deposit",
     description:
-      "Book with confidence. We don't require any upfront deposits to secure your date.",
+      "A $100 deposit secures your date. Cancel — or if weather cancels — and it's credited toward a future booking, never lost.",
   },
   {
     icon: Palette,
